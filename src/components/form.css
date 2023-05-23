@@ -1,0 +1,148 @@
+body {
+	height: 100vh;
+	/* background-image: linear-gradient(
+		to bottom,
+		#7209b7 3%,
+		#1960a3 50%,
+		#4aaef6 100%
+	); */
+}
+
+/* Header comp css */
+.header {
+	margin: 0;
+	display: flex;
+	justify-content: space-between;
+	border-bottom: 2px solid #29267b;
+	box-shadow: #10002b;
+	align-items: center;
+	color: #10002b;
+}
+
+.btnContainer {
+	display: flex;
+	padding: 5px;
+}
+.btnContainer .btn {
+	margin-right: 10px;
+	padding: 10px 20px;
+	color: #29267b;
+	border: none;
+	border-radius: 20px;
+	cursor: pointer;
+}
+
+/* Hero section component */
+.formContainer {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+.formContainer h2 {
+	color: white;
+}
+/* Register component */
+.userForm {
+	background: #240046;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 35%;
+	height: 70vh;
+	margin-top: 3%;
+	border-radius: 10px;
+	color: white;
+	font-size: large;
+}
+.signInForm {
+	/* display: none; */
+}
+.userForm div {
+	width: 100%;
+	border-radius: 10px;
+	background: #10002b;
+	align-content: center;
+}
+.userForm h2 {
+	display: flex;
+	justify-content: center;
+}
+
+.userForm form {
+	padding: 10px 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.userForm input {
+	border-radius: 15px;
+	box-shadow: 4px 8px 5px #75059b;
+
+	padding: 10px 20px;
+	margin: 10px 0;
+	font-size: larger;
+	/* border: none; */
+	border-bottom: red;
+}
+.userForm .btn {
+	margin-top: 30px;
+	padding: 10px;
+	border: none;
+	background-color: #4aaef6;
+	border-radius: 5px;
+	width: 100%;
+	cursor: pointer;
+	font-size: large;
+	color: white;
+	box-shadow: 4px 8px 5px #75059b;
+}
+.userForm p {
+	margin-top: 50px;
+}
+.userForm p a {
+	color: blue;
+	font-weight: bold;
+}
+
+/* SignIn component */
+.signInForm p {
+	margin-top: 10px;
+}
+
+.signInForm .btn {
+	margin: 20px 0 50px 0;
+}
+
+/* Footer Component */
+
+footer {
+	display: flex;
+	flex-direction: column;
+	height: 10vh;
+	width: 100vw;
+	top: 88vh;
+	position: absolute;
+	align-items: center;
+	padding-bottom: 15px;
+	background: #10002b;
+	color: white;
+}
+footer .icons ul {
+	display: flex;
+}
+.footer .icons ul li a {
+	color: white;
+	font-size: larger;
+	transition: all 400ms;
+}
+
+.footer .icons ul li a:hover {
+	transform: scale(1.2);
+	color: goldenrod;
+}
+footer ul li,
+p {
+	list-style: none;
+	padding-left: 10px;
+	margin: 0 0 0 0;
+}

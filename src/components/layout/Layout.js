@@ -1,4 +1,3 @@
-import React, { Children } from 'react';
 import Navbar from '../Navbar';
 
 const Layout = ({ children }) => {
@@ -6,7 +5,6 @@ const Layout = ({ children }) => {
 		<div>
 			<Navbar />
 			{children}
-			{/* <Footer/> */}
 		</div>
 	);
 };
