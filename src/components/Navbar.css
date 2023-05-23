@@ -1,18 +1,41 @@
 .navbar-container {
 	display: flex;
-	height: 40px;
+	/* height: 40px; */
 	padding: 10px;
 	justify-content: space-between;
-	border-bottom: 1px solid black;
-	box-shadow: gray;
+	box-shadow: 1px 4px 5px 6px rgba(0, 0, 0, 0.1);
 }
-.btn-container {
+.logo .icon-style {
+	padding-top: 3px;
+	margin: auto;
+}
+.logo {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	width: 10%;
+	height: 130%;
+	border-radius: 20px;
+	background-color: #1a759f;
+	color: white;
+	font-size: large;
+	font-family: 'Kalam', cursive;
+}
+.logo div .btn-container {
 	padding: 10px;
 }
 .btn-container Button {
 	padding: 5px;
-	width: 80px;
+	width: 90px;
 	border-radius: 20px;
 	margin-right: 10px;
 	border: 2px;
+	background-color: #1a759f;
+}
+
+/* @media Query */
+@media (max-width: 800px) {
+	.logo {
+		width: 25vw;
+	}
 }
