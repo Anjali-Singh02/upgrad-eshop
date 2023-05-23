@@ -1,49 +1,67 @@
-import React, { useState } from 'react';
+import React, { Component, useState } from 'react';
 import './Navbar.css';
 import { Box, Button, Modal, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { RiShoppingBag3Fill } from 'react-icons/ri';
 import { IconContext } from 'react-icons';
 const Navbar = () => {
-	const style = {
-		position: 'absolute',
-		top: '50%',
-		left: '50%',
-		transform: 'translate(-50%, -50%)',
-		width: 400,
-		bgcolor: 'background.paper',
-		border: '2px solid #000',
-		boxShadow: 24,
-		p: 4,
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [isSignedIn, setSignedIn] = useState(false);
+
+	const logoLinks = [
+		{
+			link: '/',
+			Component: RiShoppingBag3Fill,
+			logo: 'uG-Eshop',
+		},
+	];
+	const handleLoginOpen = () => {
+		setIsLoggedIn(!isLoggedIn);
 	};
-
-	const [signupOpen, setSignupOpen] = useState(false);
-
-	const handleSignUpOpen = () => {
-		setSignupOpen(true);
+	const handleSignIn = () => {
+		setSignedIn(!isSignedIn);
 	};
 
 	return (
 		<nav className="navbar-container">
 			<div className="logo">
-				<IconContext.Provider
-					value={{
-						className: 'global-class-name icon-style',
-						size: '1em',
-					}}
-				>
-					<RiShoppingBag3Fill />
-				</IconContext.Provider>
-				uG-Eshop
+				{logoLinks.map((element) => {
+					const { link, Component, logo } = element;
+					return (
+						<>
+							<IconContext.Provider
+								value={{
+									className: 'global-class-name icon-style',
+									size: '1em',
+								}}
+							>
+								<Link to={link}>
+									<Component />
+									<br />
+									{logo}
+								</Link>
+							</IconContext.Provider>
+						</>
+					);
+				})}
 			</div>
 			<div className="btn-container">
 				<Link to="/login">
 					<Button
 						variant="contained"
 						className="button"
-						onClick={handleSignUpOpen}
+						onClick={handleLoginOpen}
 					>
-						Login
+						{isLoggedIn ? 'Logout' : 'Login'}
+					</Button>
+				</Link>
+				<Link to="/signup">
+					<Button
+						variant="contained"
+						className="button"
+						onClick={handleSignIn}
+					>
+						{isSignedIn ? 'Sign out' : 'Sign up'}
 					</Button>
 				</Link>
 			</div>
