@@ -83,12 +83,12 @@ const LoginForm = () => {
 							type="submit"
 							className="button"
 						>
-							Sign in
+							Login
 						</Button>
 					</div>
 					<p>
 						Do you have an account?
-						<Link to="/">
+						<Link to="/signup">
 							<a> Create one</a>
 						</Link>
 					</p>
