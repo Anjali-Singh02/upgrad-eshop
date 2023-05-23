@@ -1,14 +1,19 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
 import './form.css';
 import { Link } from 'react-router-dom';
+import { validateSignup } from '../utils/helper';
+import { BackendContext } from '../context/context';
 
 const SignupForm = () => {
+	const { baseUrl } = useContext(BackendContext);
+	console.log(baseUrl);
+
 	const [user, setUser] = useState({
 		firstName: '',
 		lastName: '',
 		email: '',
 		password: '',
-		contact: '',
+		contactNumber: '',
 	});
 
 	const handleChange = (event) => {
@@ -28,21 +33,28 @@ const SignupForm = () => {
 	const [allArray, setAllArray] = useState([]);
 
 	const handleSubmit = (e) => {
-		const { firstName, lastName, email, password, contact } = user;
 		e.preventDefault();
-		if (firstName && lastName && email && password && contact) {
-			const newArray = {
-				firstName,
-				lastName,
-				email,
-				password,
-				contact,
-			};
-			setAllArray(...allArray, newArray);
-			setUser({});
-		} else {
-			alert('Please fill all the input fields!');
+		const { firstName, lastName, email, password, contactNumber } = user;
+		const isValid = validateSignup(user);
+		if (!isValid) {
+			console.log('Try again');
+			return;
 		}
+
+		fetch(`${baseUrl}api/v1/users`, {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			method: 'POST',
+			body: JSON.stringify(user),
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				console.log(data);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	};
 
 	return (
@@ -86,11 +98,11 @@ const SignupForm = () => {
 						onChange={handleChange}
 					/>
 					<input
-						type="number"
+						type="text"
 						placeholder="Contact"
 						id="contact"
-						name="contact"
-						value={user.contact}
+						name="contactNumber"
+						value={user.contactNumber}
 						onChange={handleChange}
 					/>
 					<button type="submit" className="btn btnRegister">
