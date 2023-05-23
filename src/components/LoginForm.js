@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { validateLogin } from '../utils/helper';
 import { BackendContext } from '../context/context';
 import jwt_decode from 'jwt-decode';
+import { Button, TextField } from '@mui/material';
 
 const LoginForm = () => {
 	const { baseUrl } = useContext(BackendContext);
@@ -50,35 +51,44 @@ const LoginForm = () => {
 	};
 	return (
 		<Fragment>
-			<div className="userForm signInForm">
-				<div className="title">
-					<h2>Sign In</h2>
-				</div>
+			<div className="form-container login-container">
+				<h2>Login</h2>
 
 				<form onSubmit={submitForm}>
-					<input
-						type="text"
-						placeholder="Email"
-						id="email"
-						name="email"
-						value={user.email}
-						onChange={handleChange}
-					/>
-					<input
-						type="password"
-						placeholder="Password"
-						id="password"
-						name="password"
-						value={user.password}
-						onChange={handleChange}
-					/>
-					<p>Forgot password?</p>
-					<button type="submit" className="btn btnSignIn">
-						Sign in
-					</button>
+					<div className="data-field-container">
+						<div className="data-field">
+							<TextField
+								type="text"
+								placeholder="Email"
+								id="email"
+								name="email"
+								value={user.email}
+								onChange={handleChange}
+								className="text-field"
+							/>
+							<TextField
+								type="password"
+								placeholder="Password"
+								id="password"
+								name="password"
+								value={user.password}
+								onChange={handleChange}
+								className="text-field"
+							/>
+						</div>
+					</div>
+					<div className="btn">
+						<Button
+							variant="contained"
+							type="submit"
+							className="button"
+						>
+							Sign in
+						</Button>
+					</div>
 					<p>
 						Do you have an account?
-						<Link to="/signup">
+						<Link to="/">
 							<a> Create one</a>
 						</Link>
 					</p>

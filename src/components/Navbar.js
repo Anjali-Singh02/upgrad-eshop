@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import './Navbar.css';
 import { Box, Button, Modal, Typography } from '@mui/material';
-import SignupForm from './SignupForm';
 import { Link } from 'react-router-dom';
+import { RiShoppingBag3Fill } from 'react-icons/ri';
+import { IconContext } from 'react-icons';
 const Navbar = () => {
 	const style = {
 		position: 'absolute',
@@ -24,12 +25,26 @@ const Navbar = () => {
 
 	return (
 		<nav className="navbar-container">
-			<div>logo</div>
+			<div className="logo">
+				<IconContext.Provider
+					value={{
+						className: 'global-class-name icon-style',
+						size: '1em',
+					}}
+				>
+					<RiShoppingBag3Fill />
+				</IconContext.Provider>
+				uG-Eshop
+			</div>
 			<div className="btn-container">
-				<Link to="/signup">
-					<button className="signup-btn" onClick={handleSignUpOpen}>
-						Sign up
-					</button>
+				<Link to="/login">
+					<Button
+						variant="contained"
+						className="button"
+						onClick={handleSignUpOpen}
+					>
+						Login
+					</Button>
 				</Link>
 			</div>
 		</nav>

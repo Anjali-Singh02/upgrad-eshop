@@ -3,6 +3,7 @@ import './form.css';
 import { Link } from 'react-router-dom';
 import { validateSignup } from '../utils/helper';
 import { BackendContext } from '../context/context';
+import { Button, TextField } from '@mui/material';
 
 const SignupForm = () => {
 	const { baseUrl } = useContext(BackendContext);
@@ -59,57 +60,76 @@ const SignupForm = () => {
 
 	return (
 		<Fragment>
-			<div className="userForm register">
-				<div className="title">
-					<h2>Register</h2>
-				</div>
+			<div className="form-container">
+				{/* <div className="title"> */}
+				<h2>Sign Up</h2>
+				{/* </div> */}
 
 				<form onSubmit={handleSubmit}>
-					<input
-						type="text"
-						placeholder="Firstname"
-						id="firstname"
-						name="firstName"
-						value={user.firstName}
-						onChange={handleChange}
-					/>
-					<input
-						type="text"
-						placeholder="Lastname"
-						id="lastname"
-						name="lastName"
-						value={user.lastName}
-						onChange={handleChange}
-					/>
-					<input
-						type="email"
-						placeholder="Email"
-						id="email"
-						name="email"
-						value={user.email}
-						onChange={handleChange}
-					/>
-					<input
-						type="password"
-						placeholder="Password"
-						id="password"
-						name="password"
-						value={user.password}
-						onChange={handleChange}
-					/>
-					<input
-						type="text"
-						placeholder="Contact"
-						id="contact"
-						name="contactNumber"
-						value={user.contactNumber}
-						onChange={handleChange}
-					/>
-					<button type="submit" className="btn btnRegister">
-						Register
-					</button>
+					<div className="name-field-container">
+						<div className="name-field">
+							<TextField
+								type="text"
+								placeholder="Firstname"
+								id="firstname"
+								name="firstName"
+								value={user.firstName}
+								onChange={handleChange}
+								className="name-field text-field"
+							/>
+							<TextField
+								type="text"
+								placeholder="Lastname"
+								id="lastname"
+								name="lastName"
+								value={user.lastName}
+								onChange={handleChange}
+								className="name-field text-field"
+							/>
+						</div>
+					</div>
+					<div className="data-field-container">
+						<div className="data-field">
+							<TextField
+								type="email"
+								placeholder="Email"
+								id="email"
+								name="email"
+								value={user.email}
+								onChange={handleChange}
+								className="text-field"
+							/>
+							<TextField
+								type="password"
+								placeholder="Password"
+								id="password"
+								name="password"
+								value={user.password}
+								onChange={handleChange}
+								className="text-field"
+							/>
+							<TextField
+								type="text"
+								placeholder="Contact"
+								id="contact"
+								name="contactNumber"
+								value={user.contactNumber}
+								onChange={handleChange}
+								className="text-field"
+							/>
+						</div>
+					</div>
+					<div className="btn">
+						<Button
+							className="button"
+							variant="contained"
+							type="submit"
+						>
+							Sign up
+						</Button>
+					</div>
 					<p>
-						Already have an account? <Link to="/">Login </Link>
+						Already have an account? <Link to="/login">Login </Link>
 					</p>
 				</form>
 			</div>
