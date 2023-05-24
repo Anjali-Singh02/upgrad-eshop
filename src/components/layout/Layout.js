@@ -4,7 +4,9 @@ const Layout = ({ children }) => {
 	return (
 		<div>
 			<Navbar />
-			{children}
+			<div style={{ textAlign: 'center', width: '100%', margin: 'auto' }}>
+				{children}
+			</div>
 		</div>
 	);
 };
