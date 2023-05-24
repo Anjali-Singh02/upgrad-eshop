@@ -1,0 +1,15 @@
+.banner-container {
+	width: 100%;
+}
+.banner-container img {
+	width: 100vw;
+}
+.card-container {
+	width: 20vw;
+	/* display: flex; */
+	padding: 20px;
+}
+.card-container .card {
+	/* display: flex; */
+	width: 250px;
+}
