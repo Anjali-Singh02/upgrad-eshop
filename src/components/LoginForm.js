@@ -1,5 +1,5 @@
 import './form.css';
-import { Fragment, useState, useEffect, useContext } from 'react';
+import { Fragment, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { validateLogin } from '../utils/helper';
 import { BackendContext } from '../context/context';
