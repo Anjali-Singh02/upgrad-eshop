@@ -1,11 +1,27 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './Header.css';
 import '../components/Navbar.css';
 import { IconContext } from 'react-icons/lib';
 import { BiSearchAlt } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
+import { BackendContext } from '../context/context';
 const Header = () => {
+	const { baseUrl } = useContext(BackendContext);
+
+	const handleSearch = () => {
+		fetch(`${baseUrl}api/v1/products`, {
+			method: 'GET',
+			headers: { 'Content-Type': 'application/json' },
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				console.log(data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
 	return (
 		<div className=" header-container">
 			<ul>
@@ -31,6 +47,7 @@ const Header = () => {
 						<BiSearchAlt />
 					</IconContext.Provider>
 				</div>
+				<Button onClick={handleSearch}>Search</Button>
 			</ul>
 
 			<div className="btn-container">
