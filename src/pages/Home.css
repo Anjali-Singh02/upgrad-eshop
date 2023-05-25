@@ -1,0 +1,12 @@
+.banner-container {
+	width: 100%;
+}
+.banner-container img {
+	width: 100%;
+}
+.card-container {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}

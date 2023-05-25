@@ -1,9 +1,9 @@
 .navbar-container {
 	display: flex;
-	/* height: 40px; */
+	position: relative;
 	padding: 10px;
 	justify-content: space-between;
-	box-shadow: 1px 4px 5px 6px rgba(0, 0, 0, 0.1);
+	box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.1);
 }
 .logo .icon-style {
 	padding-top: 3px;
@@ -14,20 +14,24 @@
 	flex-direction: column;
 	text-align: center;
 	width: 10%;
-	height: 130%;
-	border-radius: 20px;
-	background-color: #1a759f;
-	color: white;
+
 	font-size: large;
+	font-weight: bold;
 	font-family: 'Kalam', cursive;
 }
 .logo div .btn-container {
 	padding: 10px;
 }
+.logo a {
+	color: #1a759f;
+	text-decoration: none;
+}
+
 .btn-container Button {
 	padding: 5px;
 	width: 90px;
 	border-radius: 20px;
+	margin-top: 10px;
 	margin-right: 10px;
 	border: 2px;
 	background-color: #1a759f;

@@ -1,0 +1,21 @@
+.content-container {
+	width: 100%;
+}
+.body-container {
+	display: flex;
+}
+.filter-section {
+	max-width: 350px;
+	width: 100%;
+}
+.sub-header-container {
+	display: flex;
+	justify-content: space-between;
+}
+.content-section {
+	width: 100%;
+	display: flex;
+	justify-content: space-evenly;
+	flex-wrap: wrap;
+	margin: 0px auto;
+}
