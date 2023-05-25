@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useContext, useEffect, useState } from 'react';
 import './Navbar.css';
 import {
 	Avatar,
@@ -13,12 +13,15 @@ import {
 	Tooltip,
 	Typography,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { RiShoppingBag3Fill } from 'react-icons/ri';
 import { IconContext } from 'react-icons';
 import { Settings, Logout } from '@mui/icons-material/';
 import Header from '../common/Header';
+import { SessionContext } from '../context/context';
 const Navbar = () => {
+	const { username, email, setState } = useContext(SessionContext);
+
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	// const isLoggeIn = true;
@@ -29,6 +32,12 @@ const Navbar = () => {
 	};
 	const handleClose = () => {
 		setAnchorEl(null);
+	};
+	const handleLogout = () => {
+		sessionStorage.removeItem('uuid');
+		sessionStorage.removeItem('name');
+		sessionStorage.removeItem('isAdmin');
+		setState({ username: 'Guest', email: '' });
 	};
 
 	const [isSignedIn, setSignedIn] = useState(false);
@@ -83,7 +92,7 @@ const Navbar = () => {
 						</Button>
 					</Link>
 				)}
-
+				{/* 
 				<Link to="/signup">
 					<Button
 						variant="contained"
@@ -92,21 +101,21 @@ const Navbar = () => {
 					>
 						Toggle Login
 					</Button>
-				</Link>
-				{isLoggedIn && (
-					<Tooltip title="Account settings">
-						<IconButton
-							onClick={handleClick}
-							size="small"
-							sx={{ ml: 2 }}
-							aria-controls={open ? 'account-menu' : undefined}
-							aria-haspopup="true"
-							aria-expanded={open ? 'true' : undefined}
-						>
-							<Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
-						</IconButton>
-					</Tooltip>
-				)}
+				</Link> */}
+				{/* {isLoggedIn && ( */}
+				<Tooltip title="Account settings">
+					<IconButton
+						onClick={handleClick}
+						size="small"
+						sx={{ ml: 2 }}
+						aria-controls={open ? 'account-menu' : undefined}
+						aria-haspopup="true"
+						aria-expanded={open ? 'true' : undefined}
+					>
+						<Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+					</IconButton>
+				</Tooltip>
+				{/* )} */}
 				<Box sx={{}}>
 					<Menu
 						sx={{ display: 'flex', flexDirection: 'column' }}
@@ -162,7 +171,7 @@ const Navbar = () => {
 										color: 'black',
 									}}
 								>
-									username
+									{username}
 								</Typography>
 								<Typography
 									sx={{
@@ -171,7 +180,7 @@ const Navbar = () => {
 										minWidth: 100,
 									}}
 								>
-									emailid@gmail.com
+									{email}
 								</Typography>
 							</div>
 						</MenuItem>
@@ -182,7 +191,13 @@ const Navbar = () => {
 							</ListItemIcon>
 							Settings
 						</MenuItem>
-						<MenuItem onClick={handleClose}>
+
+						<MenuItem
+							onClick={() => {
+								handleLogout();
+								handleClose();
+							}}
+						>
 							<ListItemIcon>
 								<Logout fontSize="small" />
 							</ListItemIcon>
