@@ -34,13 +34,15 @@ const Home = () => {
 				{item.map((element) => {
 					return (
 						<Card
-						// sx={{
-						// 	width: '300px',
-						// }}
+							sx={{
+								width: '300px',
+								margin: '10px',
+							}}
 						>
 							<CardActionArea>
 								<CardMedia
 									component="img"
+									height="350"
 									image={element.image}
 									alt="bag"
 								/>
