@@ -56,6 +56,13 @@ const SignupForm = () => {
 			.catch((error) => {
 				console.log(error);
 			});
+		setUser({
+			firstName: '',
+			lastName: '',
+			email: '',
+			password: '',
+			contactNumber: '',
+		});
 	};
 
 	return (
