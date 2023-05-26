@@ -18,7 +18,6 @@ import { RiShoppingBag3Fill } from 'react-icons/ri';
 import { MdAccountCircle } from 'react-icons/md';
 import { IconContext } from 'react-icons';
 import { Settings, Logout } from '@mui/icons-material/';
-import Header from '../common/Header';
 import { SessionContext } from '../context/context';
 const Navbar = () => {
 	const { username, email, setState } = useContext(SessionContext);
