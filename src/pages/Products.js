@@ -6,6 +6,7 @@ import { categories } from '../lib/index';
 import {
 	Box,
 	Button,
+	ButtonGroup,
 	FormControl,
 	InputLabel,
 	MenuItem,
@@ -13,6 +14,8 @@ import {
 } from '@mui/material';
 import ProductCard from '../components/ProductCard';
 import { Link } from 'react-router-dom';
+import { IconContext } from 'react-icons';
+import { BiSearchAlt } from 'react-icons/bi';
 const Products = () => {
 	const [state, setState] = useState({
 		categories: categories,
@@ -42,6 +45,19 @@ const Products = () => {
 		getApi();
 	}, []);
 
+	const handleSearch = () => {
+		fetch(`${baseUrl}api/v1/products`, {
+			method: 'GET',
+			headers: { 'Content-Type': 'application/json' },
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				console.log(data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
 	return (
 		<div>
 			{/* <Header />
@@ -51,12 +67,49 @@ const Products = () => {
 
 			<div className="content-container">
 				<div className="sub-header-container">
-					<h2>Products</h2>
-					<div>
-						<Button>Sorting</Button>
-						<Button>Sorting</Button>
-						<Button>Sorting</Button>
-						<Button>Sorting</Button>
+					<div className="search-container">
+						<div className="search-bar">
+							<div>
+								<input
+									type="text"
+									placeholder="Search"
+									className="search-input"
+								/>
+								<IconContext.Provider
+									value={{
+										size: '1.2em',
+										className:
+											'global class name search-icon',
+									}}
+								>
+									<BiSearchAlt />
+								</IconContext.Provider>
+							</div>
+							<div className="btn-container">
+								<Button
+									variant="contained"
+									onClick={handleSearch}
+									className="button"
+								>
+									Search
+								</Button>
+							</div>
+						</div>
+
+						<ButtonGroup
+							variant="outlined"
+							aria-label="outlined button group"
+							className="btn-group"
+						>
+							<Button className="tab-btn">Default</Button>
+							<Button className="tab-btn">
+								Price High to Low
+							</Button>
+							<Button className="tab-btn">
+								Price Low to High
+							</Button>
+							<Button className="tab-btn">New</Button>
+						</ButtonGroup>
 					</div>
 				</div>
 				<div className="body-container">
