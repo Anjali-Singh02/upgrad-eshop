@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Header from '../common/Header';
 import './Products.css';
 import { BackendContext } from '../context/context';
 import { categories } from '../lib/index';
