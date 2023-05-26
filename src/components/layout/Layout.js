@@ -1,6 +1,7 @@
-import Navbar from '../Navbar';
+// import Navbar from '../Navbar';
 import { SessionContext } from '../../context/context';
 import { useEffect, useState } from 'react';
+import Header from '../Header.js';
 const Layout = ({ children }) => {
 	const [state, setState] = useState({
 		username: '',
@@ -21,8 +22,7 @@ const Layout = ({ children }) => {
 					setState: setState,
 				}}
 			>
-				<Navbar />
-
+				<Header />
 				<div
 					style={{
 						textAlign: 'center',

@@ -86,15 +86,13 @@ const LoginForm = () => {
 						</div>
 					</div>
 					<div className="btn">
-						<Link to="/">
-							<Button
-								variant="contained"
-								type="submit"
-								className="button"
-							>
-								Login
-							</Button>
-						</Link>
+						<Button
+							variant="contained"
+							type="submit"
+							className="button"
+						>
+							Login
+						</Button>
 					</div>
 					<p>
 						Do you have an account?

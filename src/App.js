@@ -5,6 +5,7 @@ import SignupForm from './components/SignupForm';
 import Home from './pages/Home';
 import Products from './pages/Products';
 import ItemPage from './pages/ItemPage';
+import Cart from './pages/Cart';
 
 const App = () => {
 	return (
@@ -16,6 +17,7 @@ const App = () => {
 					<Route path="/login" element={<LoginForm />} />
 					<Route path="/products" element={<Products />} />
 					<Route path="/products/:id" element={<ItemPage />} />
+					<Route path="/cart" element={<Cart />} />
 				</Routes>
 			</div>
 		</>
