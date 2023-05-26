@@ -15,9 +15,9 @@ import {
 } from '@mui/material';
 import { Link, useParams } from 'react-router-dom';
 import { RiShoppingBag3Fill } from 'react-icons/ri';
+import { MdAccountCircle } from 'react-icons/md';
 import { IconContext } from 'react-icons';
 import { Settings, Logout } from '@mui/icons-material/';
-import Header from '../common/Header';
 import { SessionContext } from '../context/context';
 const Navbar = () => {
 	const { username, email, setState } = useContext(SessionContext);
@@ -52,34 +52,36 @@ const Navbar = () => {
 	const handleLoginOpen = () => {
 		// setIsLoggedIn(!isLoggedIn);
 	};
-	const handleSignIn = () => {
-		setSignedIn(!isSignedIn);
-	};
 
 	return (
 		<nav className="navbar-container">
-			<div className="logo">
-				{logoLinks.map((element) => {
-					const { link, Component, logo } = element;
-					return (
-						<>
-							<IconContext.Provider
-								value={{
-									className: 'global-class-name icon-style',
-									size: '1em',
-								}}
-							>
-								<Link to={link}>
-									<Component />
-									<br />
-									{logo}
-								</Link>
-							</IconContext.Provider>
-						</>
-					);
-				})}
+			<div className="logo-menu-container ">
+				<div className="logo">
+					{logoLinks.map((element) => {
+						const { link, Component, logo } = element;
+						return (
+							<>
+								<IconContext.Provider
+									value={{
+										className:
+											'global-class-name icon-style',
+										size: '1em',
+									}}
+								>
+									<Link to={link}>
+										<Component />
+										<br />
+										{logo}
+									</Link>
+								</IconContext.Provider>
+							</>
+						);
+					})}
+				</div>
+				<div className="home">
+					<Link to="/">Home</Link>
+				</div>
 			</div>
-
 			<div className="btn-container">
 				{!isLoggedIn && (
 					<Link to="/login">
@@ -92,27 +94,19 @@ const Navbar = () => {
 						</Button>
 					</Link>
 				)}
-				{/* 
-				<Link to="/signup">
-					<Button
-						variant="contained"
-						className="button"
-						onClick={() => setIsLoggedIn((val) => !val)}
-					>
-						Toggle Login
-					</Button>
-				</Link> */}
-				{/* {isLoggedIn && ( */}
+
 				<Tooltip title="Account settings">
 					<IconButton
 						onClick={handleClick}
-						size="small"
-						sx={{ ml: 2 }}
+						size="large"
+						sx={{ ml: 2, fontSize: '35px' }}
 						aria-controls={open ? 'account-menu' : undefined}
 						aria-haspopup="true"
 						aria-expanded={open ? 'true' : undefined}
 					>
-						<Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+						{/* <Avatar sx={{ width: 32, height: 32 }}> */}
+						<MdAccountCircle />
+						{/* </Avatar> */}
 					</IconButton>
 				</Tooltip>
 				{/* )} */}

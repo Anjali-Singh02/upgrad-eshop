@@ -77,7 +77,7 @@ const ItemPage = ({ element }) => {
 									Rating
 								</h1>
 								<h1 className="text-lg font-fjalla">
-									{data.rating.rate} of {data.rating.count}
+									{/* {data.rating.rate} of {data.rating.count} */}
 								</h1>
 							</div>
 						</div>
