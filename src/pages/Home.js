@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './Home.css';
-import Header from '../common/Header';
 import banner from '../assets/banner.jpg';
 import product from '../assets/product.jfif';
 import {
@@ -10,6 +9,10 @@ import {
 	CardMedia,
 	Typography,
 } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { BsFillArrowRightCircleFill } from 'react-icons/bs';
+import { IconContext } from 'react-icons';
+import ProductCard from '../components/ProductCard';
 
 const Home = () => {
 	const [item, setItem] = useState([]);
@@ -26,37 +29,22 @@ const Home = () => {
 
 	return (
 		<div>
-			<Header />
 			<div className="banner-container">
 				<img src={banner} alt="banner" />
 			</div>
+			<div className="display-products">
+				<Link to="/products">View more</Link>
+			</div>
 			<div className="card-container">
-				{item.map((element) => {
+				{item.map((element, elemId) => {
 					return (
-						<Card
-							sx={{
-								width: '300px',
-								margin: '10px',
-							}}
-						>
-							<CardActionArea>
-								<CardMedia
-									component="img"
-									height="350"
-									image={element.image}
-									alt="bag"
-								/>
-								<CardContent>
-									<Typography
-										gutterBottom
-										variant="h6"
-										component="div"
-									>
-										{element.title}
-									</Typography>
-								</CardContent>
-							</CardActionArea>
-						</Card>
+						<Link to={`/products/${element.id}`}>
+							<ProductCard
+								className="card"
+								key={elemId}
+								element={element}
+							/>
+						</Link>
 					);
 				})}
 			</div>
