@@ -41,7 +41,7 @@ const LoginForm = () => {
 				const decode = jwt_decode(token);
 				console.log(decode);
 				sessionStorage.setItem('uuid', decode._id);
-				// sessionStorage.setItem('isAdmin', decode.isAdmin);
+				sessionStorage.setItem('isAdmin', decode.isAdmin);
 				return response.json();
 			})
 			.then((data) => {
