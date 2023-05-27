@@ -86,13 +86,15 @@ const ItemPage = ({ element }) => {
 						</div>
 						<br />
 						<div className=" button-cont btn">
-							<Button
-								className="button add-btn"
-								sx={{ margin: '10px' }}
-								variant="contained"
-							>
-								Add To Cart
-							</Button>
+							<Link to="/cart">
+								<Button
+									className="button add-btn"
+									sx={{ margin: '10px' }}
+									variant="contained"
+								>
+									Add To Cart
+								</Button>
+							</Link>
 							<Button
 								className="button buy-btn"
 								sx={{ margin: '10px' }}
