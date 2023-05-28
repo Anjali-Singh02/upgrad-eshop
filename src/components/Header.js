@@ -1,12 +1,29 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import CustomModal from './Modal';
 import './Header.css';
-import { BackendContext } from '../context/context';
+import { BackendContext, SessionContext } from '../context/context';
 import { Link, useParams } from 'react-router-dom';
-import { Button, Tabs, Tab, Box, TextField } from '@mui/material';
+import {
+	Button,
+	Tabs,
+	Tab,
+	Box,
+	TextField,
+	Tooltip,
+	IconButton,
+	Menu,
+	MenuItem,
+	Avatar,
+	Typography,
+	ListItemIcon,
+} from '@mui/material';
 import { RiShoppingBag3Fill } from 'react-icons/ri';
 import { IconContext } from 'react-icons';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import jwt_decode from 'jwt-decode';
+import { MdAccountCircle } from 'react-icons/md';
+import { Logout, Settings } from '@mui/icons-material';
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
@@ -30,13 +47,36 @@ function TabPanel(props) {
 
 const Header = ({ showBookShowButton }) => {
 	const { baseUrl } = useContext(BackendContext);
+	const {
+		username,
+		email,
+		isAdmin,
+		setState: setSession,
+	} = useContext(SessionContext);
 	const { id } = useParams();
+	const [anchorEl, setAnchorEl] = useState(null);
+	// const isLoggeIn = true;
+
+	const open = Boolean(anchorEl);
+	const handleClick = (event) => {
+		setAnchorEl(event.currentTarget);
+	};
+
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
 
 	const [state, setState] = useState({
 		modalIsOpen: false,
 		value: 0,
-		loggedIn: sessionStorage.getItem('access-token') == null ? false : true,
+		loggedIn: sessionStorage.getItem('auth-token') ? true : false,
 	});
+
+	// useEffect(() => {
+	// 	console.log(state.loggedIn);
+	// 	console.log(isAdmin);
+	// }, [state]);
+
 	const [login, setLogin] = useState({
 		email: '',
 		password: '',
@@ -55,6 +95,9 @@ const Header = ({ showBookShowButton }) => {
 		} else {
 			setState((ref) => ({ ...ref, modalIsOpen: true }));
 		}
+	};
+	const closeModal = () => {
+		setState((ref) => ({ ...ref, modalIsOpen: false }));
 	};
 
 	const tabChangeHandler = (event, value) => {
@@ -100,15 +143,25 @@ const Header = ({ showBookShowButton }) => {
 				sessionStorage.setItem('auth-token', token);
 				sessionStorage.setItem('uuid', decode._id);
 				sessionStorage.setItem('isAdmin', decode.isAdmin);
+				setSession((ref) => ({
+					...ref,
+					isAdmin: decode.isAdmin,
+				}));
 				return response.json();
 			})
 			.then((data) => {
 				console.log(data);
+
 				sessionStorage.setItem('name', data.name);
 				sessionStorage.setItem('email', data.email);
+				setState((ref) => ({ ...ref, loggedIn: true }));
 
 				// set Cookie
-				setState({ username: data.name, email: data.email });
+				setSession((ref) => ({
+					...ref,
+					username: data.name,
+					email: data.email,
+				}));
 			})
 			.catch((err) => {
 				console.log(err);
@@ -117,21 +170,15 @@ const Header = ({ showBookShowButton }) => {
 	};
 
 	const handleLogout = () => {
-		fetch(`${baseUrl}auth/logout`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				'Cache-Control': 'no-cache',
-			},
-			body: JSON.stringify({ uuid: sessionStorage.getItem('uuid') }),
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				sessionStorage.removeItem('uuid');
-				sessionStorage.removeItem('access-token');
-				console.log(data);
-			})
-			.catch((err) => console.log(err));
+		sessionStorage.removeItem('uuid');
+		sessionStorage.removeItem('auth-token');
+		sessionStorage.removeItem('email');
+		sessionStorage.removeItem('name');
+		sessionStorage.removeItem('isAdmin');
+		sessionStorage.removeItem('cart');
+		setSession({ username: '', email: '' });
+		setState((ref) => ({ ...ref, loggedIn: false }));
+		console.log('logged out successfully');
 	};
 
 	const handleSignupChange = (event) => {
@@ -161,7 +208,7 @@ const Header = ({ showBookShowButton }) => {
 					</IconContext.Provider>
 				</div>
 				{!state.loggedIn ? (
-					<div className="login-button">
+					<div className="button-section">
 						<Button
 							color="primary"
 							variant="contained"
@@ -171,41 +218,134 @@ const Header = ({ showBookShowButton }) => {
 						</Button>
 					</div>
 				) : (
-					<div className="login-button">
-						<Button
-							color="default"
-							variant="contained"
-							onClick={handleLogout}
-						>
-							Logout
-						</Button>
+					<div className="button-section">
+						<Box sx={{ marginLeft: '15px' }}>
+							<Link to={'/cart'}>
+								<ShoppingCartOutlinedIcon
+									sx={{ color: 'white' }}
+								/>
+							</Link>
+						</Box>
+						<Box sx={{ marginLeft: '15px' }}>
+							<Link to={'/addproducts'}>Add Products</Link>
+						</Box>
+						<Tooltip title="Account settings">
+							<IconButton
+								onClick={handleClick}
+								size="large"
+								sx={{ ml: 2, fontSize: '35px' }}
+								aria-controls={
+									open ? 'account-menu' : undefined
+								}
+								aria-haspopup="true"
+								aria-expanded={open ? 'true' : undefined}
+							>
+								{/* <Avatar sx={{ width: 32, height: 32 }}> */}
+								<MdAccountCircle />
+								{/* </Avatar> */}
+							</IconButton>
+						</Tooltip>
+						<Box sx={{}}>
+							<Menu
+								sx={{
+									display: 'flex',
+									flexDirection: 'column',
+								}}
+								anchorEl={anchorEl}
+								id="account-menu"
+								open={open}
+								onClose={handleClose}
+								onClick={handleClose}
+								PaperProps={{
+									elevation: 0,
+									sx: {
+										overflow: 'visible',
+										filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+										mt: 1.5,
+										'& .MuiAvatar-root': {
+											width: 32,
+											height: 32,
+											ml: -0.5,
+											mr: 1,
+										},
+										'&:before': {
+											content: '""',
+											display: 'block',
+											position: 'absolute',
+											top: 0,
+											right: 14,
+											width: 10,
+											height: 10,
+											bgcolor: 'background.paper',
+											transform:
+												'translateY(-50%) rotate(45deg)',
+											zIndex: 0,
+										},
+									},
+								}}
+								transformOrigin={{
+									horizontal: 'right',
+									vertical: 'top',
+								}}
+								anchorOrigin={{
+									horizontal: 'right',
+									vertical: 'bottom',
+								}}
+							>
+								<MenuItem
+									onClick={handleClose}
+									sx={{ display: 'flex' }}
+								>
+									<Avatar />
+									<div>
+										<Typography
+											sx={{
+												padding: 0,
+												minWidth: 100,
+												color: 'black',
+											}}
+										>
+											{username}
+										</Typography>
+										<Typography
+											sx={{
+												padding: 0,
+												fontSize: '.70em',
+												color: 'grey',
+												minWidth: 100,
+											}}
+										>
+											{email}
+										</Typography>
+									</div>
+								</MenuItem>
+
+								<MenuItem onClick={handleClose}>
+									<ListItemIcon>
+										<Settings fontSize="small" />
+									</ListItemIcon>
+									Settings
+								</MenuItem>
+
+								<MenuItem
+									onClick={() => {
+										handleLogout();
+										handleClose();
+									}}
+								>
+									<ListItemIcon>
+										<Logout fontSize="small" />
+									</ListItemIcon>
+									Logout
+								</MenuItem>
+							</Menu>
+						</Box>
 					</div>
 				)}
-				{showBookShowButton === 'true' && !state.loggedIn ? (
-					<div className="bookshow-button">
-						<Button
-							color="primary"
-							variant="contained"
-							onClick={toggleModal}
-						>
-							Book Show
-						</Button>
-					</div>
-				) : null}
-
-				{showBookShowButton === 'true' && state.loggedIn ? (
-					<div className="bookshow-button">
-						<Link to={'/bookshow/' + id}>
-							<Button variant="contained" color="primary">
-								Book Show
-							</Button>
-						</Link>
-					</div>
-				) : null}
 			</header>
 
 			{/* modal of login and signup  */}
-			<CustomModal isOpen={state.modalIsOpen} handleClose={toggleModal}>
+			<CustomModal isOpen={state.modalIsOpen} handleClose={closeModal}>
 				<Tabs
 					className="tabs"
 					value={state.value}
@@ -225,8 +365,8 @@ const Header = ({ showBookShowButton }) => {
 					>
 						<TextField
 							required
-							label="Username"
-							id="username"
+							label="Email"
+							id="email"
 							name={'email'}
 							type="text"
 							sx={{ width: '100%' }}
@@ -251,7 +391,13 @@ const Header = ({ showBookShowButton }) => {
 						/>
 					</Box>
 					<Box>
-						<Button variant="contained" onClick={handleLogin}>
+						<Button
+							variant="contained"
+							onClick={() => {
+								handleLogin();
+								closeModal();
+							}}
+						>
 							Login
 						</Button>
 					</Box>
@@ -338,7 +484,13 @@ const Header = ({ showBookShowButton }) => {
 						/>
 					</Box>
 					<Box>
-						<Button variant="contained" onClick={handleSignup}>
+						<Button
+							variant="contained"
+							onClick={() => {
+								handleSignup();
+								closeModal();
+							}}
+						>
 							Sign Up
 						</Button>
 					</Box>

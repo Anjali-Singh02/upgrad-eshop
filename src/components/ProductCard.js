@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 import React from 'react';
 
-const ProductCard = ({ element }) => {
+const ProductCard = ({ product }) => {
 	return (
 		<Card
 			sx={{
@@ -18,13 +18,26 @@ const ProductCard = ({ element }) => {
 			<CardActionArea>
 				<CardMedia
 					component="img"
-					height="400"
-					image={element.image}
+					sx={{ height: 'auto' }}
+					image={product.imageURL}
 					alt="bag"
 				/>
 				<CardContent>
-					<Typography gutterBottom variant="h6" component="div">
-						{element.title}
+					<Typography
+						gutterBottom
+						variant="h6"
+						sx={{ textAlign: 'left' }}
+						component="div"
+					>
+						{product.name}
+					</Typography>
+					<Typography
+						gutterBottom
+						variant="h6"
+						sx={{ textAlign: 'left' }}
+						component="div"
+					>
+						{product.description}
 					</Typography>
 				</CardContent>
 			</CardActionArea>

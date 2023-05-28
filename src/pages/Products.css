@@ -5,8 +5,12 @@
 	display: flex;
 }
 .filter-section {
+	box-sizing: border-box;
 	max-width: 350px;
+	margin: 50px 0px;
+	padding: 20px;
 	width: 100%;
+	height: fit-content;
 }
 .sub-header-container {
 	display: flex;
@@ -71,8 +75,9 @@ a {
 	display: flex;
 	justify-content: space-evenly;
 	flex-wrap: wrap;
-	margin: 50px 30px;
-	box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.1);
+	margin: 50px 0px;
+	padding: 20px;
+	/* box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.1); */
 }
 
 @media (max-width: 800px) {
