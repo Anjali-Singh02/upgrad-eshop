@@ -78,8 +78,11 @@
 .details-cont .add-btn:hover {
 	background-color: green;
 }
-.details-cont .buy-btn:hover {
-	background-color: #054e70;
+
+
+.grid-cols-3 {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+
 }
 .button-cont {
 	margin-top: -15px;

@@ -34,9 +34,11 @@ const Navbar = () => {
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
 	};
+
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
+
 	const handleLogout = () => {
 		sessionStorage.removeItem('uuid');
 		sessionStorage.removeItem('name');
@@ -44,13 +46,7 @@ const Navbar = () => {
 		setState({ username: 'Guest', email: '' });
 	};
 
-	const logoLinks = [
-		{
-			link: '/',
-			Component: IoCartSharp,
-			logo: 'uG-Eshop',
-		},
-	];
+
 	const handleLoginOpen = () => {
 		// setIsLoggedIn(!isLoggedIn);
 	};
@@ -59,29 +55,19 @@ const Navbar = () => {
 		<nav className="navbar-container">
 			<div className="logo-menu-container ">
 				<div className="logo">
-					{logoLinks.map((element) => {
-						const { link, Component, logo } = element;
-						return (
-							<>
-								<IconContext.Provider
-									value={{
-										className:
-											'global-class-name icon-style',
-										size: '1.5em',
-									}}
-								>
-									<Link to={link}>
-										<Component />
-										<br />
-										{logo}
-									</Link>
-								</IconContext.Provider>
-							</>
-						);
-					})}
-				</div>
-				<div className="home">
-					<Link to="/">Home</Link>
+
+					<IconContext.Provider
+						value={{
+							className: 'global-class-name icon-style',
+							size: '1em',
+						}}
+					>
+						<Link to={'/'}>
+							<RiShoppingBag3Fill />
+							uG-Eshop
+						</Link>
+					</IconContext.Provider>
+
 				</div>
 			</div>
 			<div className="btn-container">

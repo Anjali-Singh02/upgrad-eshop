@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import './itempage.css';
-import { Button } from '@mui/material';
+import { Box, Button, IconButton, Typography } from '@mui/material';
 import { IconContext } from 'react-icons';
-import { BsArrowLeftCircle, BsHeart } from 'react-icons/bs';
-import { BiRupee } from 'react-icons/bi';
+
+import { BsHeart } from 'react-icons/bs';
+import { BackendContext } from '../context/context';
+import RemoveIcon from '@mui/icons-material/Remove';
+import AddIcon from '@mui/icons-material/Add';
+
 // "id": 1,
 // "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
 // "price": 109.95,
@@ -16,93 +20,212 @@ import { BiRupee } from 'react-icons/bi';
 // "count": 120
 // }
 
-const ItemPage = ({ element }) => {
+const ItemPage = () => {
+	const { baseUrl } = useContext(BackendContext);
 	const { id } = useParams();
-	const [isLoading, setIsLoading] = useState(true);
-	const [data, setData] = useState({});
+
+	const [state, setState] = useState({});
+	const [cart, setCart] = useState({
+		cartItems: [],
+		existingProduct: false,
+		productCount: 0,
+	});
+
 	useEffect(() => {
-		fetch(`https://fakestoreapi.com/products/${id}`, {})
-			.then((res) => res.json())
-			.then((response) => {
-				console.log(response);
-				setData(response);
-				setIsLoading(false);
-				console.log(`https://fakestoreapi.com/products/${id}`);
+		fetch(`${baseUrl}api/v1/products/${id}`, {})
+			.then((response) => response.json())
+			.then((data) => {
+				// console.log(data);
+				setState(data);
 			})
 			.catch((error) => console.log(error));
+		const cartSession = JSON.parse(sessionStorage.getItem('cart')) || [];
+		setCart({
+			cartItems: cartSession,
+			productCount:
+				cartSession?.find((el) => el.id === id)?.productCount || 0,
+			existingProduct: cartSession?.find((el) => el.id === id)
+				? true
+				: false,
+		});
 	}, []);
 
-	return (
-		<>
-			<div className="back">
-				<Link to="/products">
-					<BsArrowLeftCircle />
-				</Link>
-			</div>
-			<div className="productCard ">
-				<div className=" card  ">
-					<div className="image-container">
-						<img
-							className="aspect-square"
-							src={data.image}
-							alt={'Unsupported image.'}
-							height="500"
-							width="500"
-						/>
-						<IconContext.Provider
-							value={{
-								color: '#000',
-								size: '1em',
-								className: 'global-class-name heart-icon',
-							}}
-						>
-							<BsHeart />
-						</IconContext.Provider>
-					</div>
-					<div className=" details-cont">
-						<div className="heading-cont">
-							<h1 className="title">{data.title}</h1>
-							<h1 className="desc">{data.description}</h1>
-						</div>
-						<div className="specifications-cont">
-							<div className="grid-cont">
-								<div className="category-cont">
-									<p>Category</p>
-									<hr />
-									<h5>{data.category}</h5>
-								</div>
+	const handleAddToCart = () => {
+		const isPresent = cart.cartItems?.find((el) => el.id === id);
+		if (isPresent) {
+			const cartItemsRef = cart.cartItems.map((el) => {
+				if (el.id === id) {
+					el.productCount += 1;
+				}
+				return el;
+			});
+			const prodCount = cart.cartItems.filter(
+				(el) => el.id === id,
+			).length;
+			setCart((ref) => ({
+				...ref,
+				cartItems: cartItemsRef,
+				productCount: prodCount,
+				existingProduct: true,
+			}));
+			sessionStorage.setItem('cart', JSON.stringify(cartItemsRef));
+		} else {
+			sessionStorage.setItem(
+				'cart',
+				JSON.stringify([
+					...cart.cartItems,
+					{ id: id, productCount: 1 },
+				]),
+			);
+			setCart((ref) => ({
+				...ref,
+				productCount: 1,
+				existingProduct: true,
+				cartItems: [...ref.cartItems, { id: id, productCount: 1 }],
+			}));
+		}
+	};
 
-								<div className="rating-cont">
-									<p>Rating</p>
-									<hr />
-									<h5>
-										{/* {data.rating.rate} of {data.rating.count} */}
-									</h5>
-								</div>
+	const handleRemoveExistingProduct = () => {
+		const cartItemsRef = cart.cartItems.map((el) => {
+			if (el.id === id) {
+				if (el.productCount > 0) {
+					el.productCount -= 1;
+				}
+			}
+			return el;
+		});
+		const prodCount = cart.cartItems.find(
+			(el) => el.id === id,
+		).productCount;
+		setCart((ref) => ({
+			...ref,
+			cartItems: cartItemsRef,
+			productCount: prodCount,
+			existingProduct: prodCount > 0 ? true : false,
+		}));
+		sessionStorage.setItem('cart', JSON.stringify(cartItemsRef));
+	};
+
+	const handleAddExistingProduct = () => {
+		const cartItemsRef = cart.cartItems.map((el) => {
+			if (el.id === id) {
+				el.productCount += 1;
+			}
+			return el;
+		});
+		const prodCount = cart.cartItems.find(
+			(el) => el.id === id,
+		).productCount;
+		setCart((ref) => ({
+			...ref,
+			cartItems: cartItemsRef,
+			productCount: prodCount,
+			existingProduct: true,
+		}));
+		sessionStorage.setItem('cart', JSON.stringify(cartItemsRef));
+	};
+
+	return (
+
+		<div className="productCard card flex-grow flex flex-col">
+			<div className="flex justify-center flex-wrap datas-start my-12">
+				<div className="imageCont rounded-md m-3 flex flex-col datas-end">
+					<IconContext.Provider
+						value={{
+							color: 'white',
+							size: '.5em',
+							className: 'global-class-name flex flex-end',
+						}}
+					>
+						<BsHeart />
+					</IconContext.Provider>
+					<img
+						className="aspect-square"
+						src={state.imageURL}
+						alt={'Unsupported image.'}
+						height="500"
+						width="500"
+					/>
+				</div>
+				<div className=" ml-24 px-6 py-2 max-w-lg w-full">
+					<div className="flex flex-col p-2">
+						<h1 className="text-3xl font-fjalla">{state.name}</h1>
+						<h1 className="text-lg font-fjalla">
+							{state.description}
+						</h1>
+					</div>
+					<div className="flex flex-col">
+						<h1 className="uppercase text-3xl pb-4">
+							specifications
+						</h1>
+						<div className="grid grid-cols-3 gap-4">
+							<div className="">
+								<h1 className="text-lg font-fjalla text-terbg">
+									Category
+								</h1>
+								<h1 className="text-lg font-fjalla">
+									{state.category}
+								</h1>
+							</div>
+							<div className="">
+								<h1 className="text-lg font-fjalla text-terbg">
+									manufacturer
+								</h1>
+								<h1 className="text-lg font-fjalla">
+									{state.manufacturer}
+								</h1>
+							</div>
+							<div className="">
+								<h1 className="text-lg font-fjalla text-terbg">
+									Available Items
+								</h1>
+								<h1 className="text-lg font-fjalla">
+									{state.availableItems}
+								</h1>
 							</div>
 						</div>
-						<div className="price-cont">
-							<h2>Price - $ {data.price}</h2>
-						</div>
-						<br />
-						<div className=" button-cont btn">
-							<Link to="/cart">
+					</div>
+					<div className="flex flex-col">
+						<h2>Price - {state.price}</h2>
+					</div>
+					<br />
+					<div className="flex ">
+						{cart.existingProduct ? (
+							<Box sx={{ display: 'flex', alignItem: 'center' }}>
 								<Button
-									className="button add-btn"
 									sx={{ margin: '10px' }}
+									color="primary"
 									variant="contained"
+									onClick={handleRemoveExistingProduct}
 								>
-									Add To Cart
+									<RemoveIcon />
 								</Button>
-							</Link>
+								<Typography sx={{ margin: '0px 10px' }}>
+									{cart.productCount}
+								</Typography>
+								<Button
+									sx={{ margin: '10px' }}
+									color="primary"
+									variant="contained"
+									onClick={handleAddExistingProduct}
+								>
+									<AddIcon />
+								</Button>
+							</Box>
+						) : (
 							<Button
-								className="button buy-btn"
 								sx={{ margin: '10px' }}
 								variant="contained"
+								onClick={handleAddToCart}
 							>
-								Buy Now
+								Add To Cart
 							</Button>
-						</div>
+						)}
+						<Button sx={{ margin: '10px' }} variant="contained">
+							Buy Now
+						</Button>
+
 					</div>
 				</div>
 			</div>
