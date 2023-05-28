@@ -3,10 +3,12 @@ import { Link, useParams } from 'react-router-dom';
 import './itempage.css';
 import { Box, Button, IconButton, Typography } from '@mui/material';
 import { IconContext } from 'react-icons';
+
 import { BsHeart } from 'react-icons/bs';
 import { BackendContext } from '../context/context';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
+
 // "id": 1,
 // "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
 // "price": 109.95,
@@ -125,6 +127,7 @@ const ItemPage = () => {
 	};
 
 	return (
+
 		<div className="productCard card flex-grow flex flex-col">
 			<div className="flex justify-center flex-wrap datas-start my-12">
 				<div className="imageCont rounded-md m-3 flex flex-col datas-end">
@@ -222,10 +225,11 @@ const ItemPage = () => {
 						<Button sx={{ margin: '10px' }} variant="contained">
 							Buy Now
 						</Button>
+
 					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 
