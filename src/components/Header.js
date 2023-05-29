@@ -68,14 +68,26 @@ const Header = ({ showBookShowButton }) => {
 
 	const [state, setState] = useState({
 		modalIsOpen: false,
+		addProductModal: false,
+		categories: [],
 		value: 0,
 		loggedIn: sessionStorage.getItem('auth-token') ? true : false,
 	});
 
-	// useEffect(() => {
-	// 	console.log(state.loggedIn);
-	// 	console.log(isAdmin);
-	// }, [state]);
+	useEffect(() => {
+		fetch(`${baseUrl}api/v1/products/categories`, {
+			method: 'GET',
+			headers: { 'Content-Type': 'application/json' },
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				console.log('categories = ', data);
+				setState((ref) => ({ ...ref, categories: data }));
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, []);
 
 	const [login, setLogin] = useState({
 		email: '',
@@ -88,6 +100,26 @@ const Header = ({ showBookShowButton }) => {
 		password: '',
 		contactNumber: '',
 	});
+	const [product, setProduct] = useState({
+		name: '',
+		price: '',
+		category: '',
+		imageURL: '',
+		description: '',
+		manufacturer: '',
+		availableItems: '',
+	});
+
+	useEffect(() => {
+		console.log(product);
+	}, [product]);
+
+	const openAddProductModal = () => {
+		setState((ref) => ({ ...ref, addProductModal: true }));
+	};
+	const closeAddProductModal = () => {
+		setState((ref) => ({ ...ref, addProductModal: false }));
+	};
 
 	const toggleModal = () => {
 		if (state.modalIsOpen) {
@@ -143,6 +175,7 @@ const Header = ({ showBookShowButton }) => {
 				sessionStorage.setItem('auth-token', token);
 				sessionStorage.setItem('uuid', decode._id);
 				sessionStorage.setItem('isAdmin', decode.isAdmin);
+				console.log(decode.isAdmin);
 				setSession((ref) => ({
 					...ref,
 					isAdmin: decode.isAdmin,
@@ -191,6 +224,21 @@ const Header = ({ showBookShowButton }) => {
 		setLogin((ref) => ({ ...ref, [name]: value }));
 	};
 
+	const handleProductChange = (event) => {
+		const { name, value } = event.target;
+		setProduct((ref) => ({ ...ref, [name]: value }));
+	};
+
+	const handleAddProducts = () => {
+		fetch(`${baseUrl}api/v1/products`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'x-auth-token': sessionStorage.getItem('auth-token'),
+			},
+			body: JSON.stringify(product),
+		});
+	};
 	return (
 		<div>
 			<header className="app-header">
@@ -225,9 +273,6 @@ const Header = ({ showBookShowButton }) => {
 									sx={{ color: 'white' }}
 								/>
 							</Link>
-						</Box>
-						<Box sx={{ marginLeft: '15px' }}>
-							<Link to={'/addproducts'}>Add Products</Link>
 						</Box>
 						<Tooltip title="Account settings">
 							<IconButton
@@ -326,6 +371,20 @@ const Header = ({ showBookShowButton }) => {
 									</ListItemIcon>
 									Settings
 								</MenuItem>
+
+								{isAdmin && (
+									<MenuItem
+										onClick={() => {
+											openAddProductModal();
+											handleClose();
+										}}
+									>
+										<ListItemIcon>
+											<Settings fontSize="small" />
+										</ListItemIcon>
+										Add Products
+									</MenuItem>
+								)}
 
 								<MenuItem
 									onClick={() => {
@@ -495,6 +554,135 @@ const Header = ({ showBookShowButton }) => {
 						</Button>
 					</Box>
 				</TabPanel>
+			</CustomModal>
+
+			{/* modal of add products  */}
+			<CustomModal
+				isOpen={state.addProductModal}
+				handleClose={closeAddProductModal}
+			>
+				<Box
+					sx={{
+						marginBottom: '15px',
+					}}
+				>
+					<TextField
+						required
+						label="Name"
+						id="name"
+						name={'name'}
+						type="text"
+						sx={{ width: '100%' }}
+						onChange={handleProductChange}
+					/>
+				</Box>
+				<Box
+					sx={{
+						marginBottom: '15px',
+					}}
+				>
+					<TextField
+						required
+						label="price"
+						id="price"
+						name={'price'}
+						type="number"
+						sx={{ width: '100%' }}
+						price={product.price}
+						onChange={handleProductChange}
+					/>
+				</Box>
+				<Box
+					sx={{
+						marginBottom: '15px',
+					}}
+				>
+					<TextField
+						required
+						label="Image URL"
+						id="imageURL"
+						name={'imageURL'}
+						type="text"
+						sx={{ width: '100%' }}
+						imageURL={product.imageURL}
+						onChange={handleProductChange}
+					/>
+				</Box>
+				<Box
+					sx={{
+						marginBottom: '15px',
+					}}
+				>
+					<TextField
+						required
+						label="Manufacturer"
+						id="manufacturer"
+						name={'manufacturer'}
+						type="text"
+						sx={{ width: '100%' }}
+						manufacturer={product.manufacturer}
+						onChange={handleProductChange}
+					/>
+				</Box>
+				<Box
+					sx={{
+						marginBottom: '15px',
+					}}
+				>
+					<TextField
+						required
+						label="Description"
+						id="description"
+						name={'description'}
+						type="text"
+						sx={{ width: '100%' }}
+						description={product.description}
+						onChange={handleProductChange}
+					/>
+				</Box>
+				<Box
+					sx={{
+						marginBottom: '15px',
+					}}
+				>
+					<TextField
+						required
+						label="Available Items"
+						id="availableItems"
+						name={'availableItems'}
+						type="number"
+						sx={{ width: '100%' }}
+						availableItems={product.availableItems}
+						onChange={handleProductChange}
+					/>
+				</Box>
+				<Box
+					sx={{
+						marginBottom: '15px',
+					}}
+				>
+					<TextField
+						required
+						label="Category"
+						id="category"
+						name={'category'}
+						type="text"
+						sx={{ width: '100%' }}
+						category={product.category}
+						onChange={handleProductChange}
+					/>
+				</Box>
+				<Box>
+					<Button
+						variant="contained"
+						onClick={() => {
+							handleAddProducts();
+							closeModal();
+						}}
+					>
+						Add products
+					</Button>
+				</Box>
 			</CustomModal>
 		</div>
 	);
