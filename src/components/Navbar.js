@@ -14,7 +14,7 @@ import {
 	Typography,
 } from '@mui/material';
 import { Link, useParams } from 'react-router-dom';
-import { RiShoppingBag3Fill } from 'react-icons/ri';
+import { IoCartSharp } from 'react-icons/io5';
 import { MdAccountCircle } from 'react-icons/md';
 import { IconContext } from 'react-icons';
 import { Settings, Logout } from '@mui/icons-material/';
@@ -25,7 +25,11 @@ const Navbar = () => {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	// const isLoggeIn = true;
-
+	useEffect(() => {
+		if (username && email) {
+			setIsLoggedIn(true);
+		}
+	}, [username, email]);
 	const open = Boolean(anchorEl);
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
@@ -42,6 +46,7 @@ const Navbar = () => {
 		setState({ username: 'Guest', email: '' });
 	};
 
+
 	const handleLoginOpen = () => {
 		// setIsLoggedIn(!isLoggedIn);
 	};
@@ -50,6 +55,7 @@ const Navbar = () => {
 		<nav className="navbar-container">
 			<div className="logo-menu-container ">
 				<div className="logo">
+
 					<IconContext.Provider
 						value={{
 							className: 'global-class-name icon-style',
@@ -61,6 +67,7 @@ const Navbar = () => {
 							uG-Eshop
 						</Link>
 					</IconContext.Provider>
+
 				</div>
 			</div>
 			<div className="btn-container">
@@ -69,27 +76,29 @@ const Navbar = () => {
 						<Button
 							variant="contained"
 							className="button"
-							onClick={handleLoginOpen}
+							// onClick={handleLoginOpen}
 						>
 							Login
 						</Button>
 					</Link>
 				)}
 
-				<Tooltip title="Account settings">
-					<IconButton
-						onClick={handleClick}
-						size="large"
-						sx={{ ml: 2, fontSize: '35px' }}
-						aria-controls={open ? 'account-menu' : undefined}
-						aria-haspopup="true"
-						aria-expanded={open ? 'true' : undefined}
-					>
-						{/* <Avatar sx={{ width: 32, height: 32 }}> */}
-						<MdAccountCircle />
-						{/* </Avatar> */}
-					</IconButton>
-				</Tooltip>
+				{isLoggedIn && (
+					<Tooltip title="Account settings">
+						<IconButton
+							onClick={handleClick}
+							size="large"
+							sx={{ ml: 2, fontSize: '35px' }}
+							aria-controls={open ? 'account-menu' : undefined}
+							aria-haspopup="true"
+							aria-expanded={open ? 'true' : undefined}
+						>
+							{/* <Avatar sx={{ width: 32, height: 32 }}> */}
+							<MdAccountCircle />
+							{/* </Avatar> */}
+						</IconButton>
+					</Tooltip>
+				)}
 				{/* )} */}
 				<Box sx={{}}>
 					<Menu

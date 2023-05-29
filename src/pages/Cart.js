@@ -1,3 +1,4 @@
+
 import React, { useContext, useEffect, useState } from 'react';
 import './Cart.css';
 import { BackendContext } from '../context/context';
@@ -413,6 +414,7 @@ const Cart = () => {
 				</form>
 			</CustomModal>
 		</div>
+
 	);
 };
 
