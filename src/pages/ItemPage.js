@@ -1,22 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import './itempage.css';
-import { Box, Button, IconButton, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { IconContext } from 'react-icons';
 import { BsHeart } from 'react-icons/bs';
 import { BackendContext } from '../context/context';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
-// "id": 1,
-// "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
-// "price": 109.95,
-// "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
-// "category": "men's clothing",
-// "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-// "rating": {
-// "rate": 3.9,
-// "count": 120
-// }
 
 const ItemPage = () => {
 	const { baseUrl } = useContext(BackendContext);
@@ -219,7 +209,11 @@ const ItemPage = () => {
 								Add To Cart
 							</Button>
 						)}
-						<Button sx={{ margin: '10px' }} variant="contained">
+						<Button
+							sx={{ margin: '10px' }}
+							variant="contained"
+							href="/cart"
+						>
 							Buy Now
 						</Button>
 					</div>
