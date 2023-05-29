@@ -58,10 +58,6 @@ const Cart = () => {
 		},
 	]);
 
-	useEffect(() => {
-		console.log(addresses);
-	}, []);
-
 	const [formData, setFormData] = useState({
 		name: '',
 		contactNumber: '',
