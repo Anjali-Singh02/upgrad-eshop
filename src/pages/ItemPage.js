@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import './itempage.css';
 import { Button } from '@mui/material';
 import { IconContext } from 'react-icons';
 import { BsArrowLeftCircle, BsHeart } from 'react-icons/bs';
 import { BiRupee } from 'react-icons/bi';
+import { BackendContext } from '../context/context';
 // "id": 1,
 // "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
 // "price": 109.95,
@@ -20,14 +21,14 @@ const ItemPage = ({ element }) => {
 	const { id } = useParams();
 	const [isLoading, setIsLoading] = useState(true);
 	const [data, setData] = useState({});
+	const { baseUrl } = useContext(BackendContext);
 	useEffect(() => {
-		fetch(`https://fakestoreapi.com/products/${id}`, {})
+		fetch(`${baseUrl}api/v1/products/${id}`, {})
 			.then((res) => res.json())
 			.then((response) => {
 				console.log(response);
 				setData(response);
 				setIsLoading(false);
-				console.log(`https://fakestoreapi.com/products/${id}`);
 			})
 			.catch((error) => console.log(error));
 	}, []);
@@ -44,7 +45,7 @@ const ItemPage = ({ element }) => {
 					<div className="image-container">
 						<img
 							className="aspect-square"
-							src={data.image}
+							src={data.imageURL}
 							alt={'Unsupported image.'}
 							height="500"
 							width="500"
@@ -61,7 +62,7 @@ const ItemPage = ({ element }) => {
 					</div>
 					<div className=" details-cont">
 						<div className="heading-cont">
-							<h1 className="title">{data.title}</h1>
+							<h1 className="title">{data.name}</h1>
 							<h1 className="desc">{data.description}</h1>
 						</div>
 						<div className="specifications-cont">
@@ -73,11 +74,9 @@ const ItemPage = ({ element }) => {
 								</div>
 
 								<div className="rating-cont">
-									<p>Rating</p>
+									<p>Manufacturer</p>
 									<hr />
-									<h5>
-										{/* {data.rating.rate} of {data.rating.count} */}
-									</h5>
+									<h5>{data.manufacturer}</h5>
 								</div>
 							</div>
 						</div>
