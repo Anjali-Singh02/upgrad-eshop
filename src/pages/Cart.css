@@ -7,7 +7,7 @@
 	font-weight: bold;
 	margin-bottom: 10px;
 }
-
+/* 
 .form-group {
 	margin-bottom: 20px;
 }
@@ -22,7 +22,7 @@
 	padding: 5px;
 	border: 1px solid #ccc;
 	border-radius: 4px;
-}
+} */
 
 .button {
 	padding: 10px 20px;
@@ -86,4 +86,8 @@
 }
 .checkout-data {
 	margin-bottom: 20px;
+}
+
+.cart-right {
+	min-width: 500px;
 }

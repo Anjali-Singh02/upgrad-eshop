@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 import React from 'react';
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, isAdmin }) => {
 	return (
 		<Card
 			sx={{
