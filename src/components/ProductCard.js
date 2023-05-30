@@ -19,12 +19,12 @@ const ProductCard = ({ element }) => {
 				<CardMedia
 					component="img"
 					height="400"
-					image={element.image}
+					image={element.imageURL}
 					alt="bag"
 				/>
 				<CardContent>
 					<Typography gutterBottom variant="h6" component="div">
-						{element.title}
+						{element.name}
 					</Typography>
 				</CardContent>
 			</CardActionArea>
