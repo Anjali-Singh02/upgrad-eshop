@@ -1,4 +1,9 @@
 import React from 'react';
+import '../pages/cart.css';
+import { Button, TextField } from '@mui/material';
+import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
+import { IconContext } from 'react-icons';
+import { FaTrash } from 'react-icons/fa';
 
 const Items = () => {
 	return (
