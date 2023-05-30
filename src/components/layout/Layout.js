@@ -1,15 +1,17 @@
-import Navbar from '../Navbar';
 import { SessionContext } from '../../context/context';
 import { useEffect, useState } from 'react';
+import Header from '../Header';
 const Layout = ({ children }) => {
 	const [state, setState] = useState({
 		username: '',
 		email: '',
+		isAdmin: false,
 	});
 	useEffect(() => {
 		setState({
 			username: sessionStorage.getItem('name') || 'Guest',
 			email: sessionStorage.getItem('email') || '',
+			isAdmin: sessionStorage.getItem('isAdmin') || false,
 		});
 	}, []);
 	return (
@@ -18,10 +20,12 @@ const Layout = ({ children }) => {
 				value={{
 					username: state.username,
 					email: state.email,
+					isAdmin: state.isAdmin,
 					setState: setState,
 				}}
 			>
-				<Navbar />
+				{/* <Navbar /> */}
+				<Header />
 
 				<div
 					style={{
