@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './Home.css';
 import banner from '../assets/banner.jpg';
 import product from '../assets/product.jfif';
@@ -13,12 +13,13 @@ import { Link } from 'react-router-dom';
 import { BsFillArrowRightCircleFill } from 'react-icons/bs';
 import { IconContext } from 'react-icons';
 import ProductCard from '../components/ProductCard';
+import { BackendContext } from '../context/context';
 
 const Home = () => {
 	const [item, setItem] = useState([]);
-
+	const { baseUrl } = useContext(BackendContext);
 	const getApi = async () => {
-		const response = await fetch('https://fakestoreapi.com/products');
+		const response = await fetch(`${baseUrl}api/v1/products`);
 		// console.log(response);
 		setItem(await response.json());
 	};
