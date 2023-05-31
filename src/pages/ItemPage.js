@@ -4,24 +4,14 @@ import './itempage.css';
 import { Button } from '@mui/material';
 import { IconContext } from 'react-icons';
 import { BsArrowLeftCircle, BsHeart } from 'react-icons/bs';
-import { BiRupee } from 'react-icons/bi';
 import { BackendContext } from '../context/context';
-// "id": 1,
-// "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
-// "price": 109.95,
-// "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
-// "category": "men's clothing",
-// "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-// "rating": {
-// "rate": 3.9,
-// "count": 120
-// }
 
 const ItemPage = ({ element }) => {
 	const { id } = useParams();
 	const [isLoading, setIsLoading] = useState(true);
 	const [data, setData] = useState({});
 	const { baseUrl } = useContext(BackendContext);
+	// console.log('element: ', element);
 	useEffect(() => {
 		fetch(`${baseUrl}api/v1/products/${id}`, {})
 			.then((res) => res.json())
@@ -33,6 +23,28 @@ const ItemPage = ({ element }) => {
 			.catch((error) => console.log(error));
 	}, []);
 
+	const addItemHandler = (data) => {
+		console.log('Data: ', data);
+		const cart = JSON.parse(localStorage.getItem('cart')) || [];
+		const isProductExist = cart.find((item) => item.id === data.id);
+		if (isProductExist) {
+			const updatedCart = cart.map((item) => {
+				if (item.id === data.id) {
+					return {
+						...item,
+						quantity: item.quantity + 1,
+					};
+				}
+				return item;
+			});
+			localStorage.setItem('cart', JSON.stringify(updatedCart));
+		} else {
+			localStorage.setItem(
+				'cart',
+				JSON.stringify([...cart, { ...data, quantity: 1 }]),
+			);
+		}
+	};
 	return (
 		<>
 			<div className="back">
@@ -47,8 +59,8 @@ const ItemPage = ({ element }) => {
 							className="aspect-square"
 							src={data.imageURL}
 							alt={'Unsupported image.'}
-							height="500"
-							width="500"
+							// height="500"
+							// width="500"
 						/>
 						<IconContext.Provider
 							value={{
@@ -85,19 +97,21 @@ const ItemPage = ({ element }) => {
 						</div>
 						<br />
 						<div className=" button-cont btn">
-							<Link to="/cart">
-								<Button
-									className="button add-btn"
-									sx={{ margin: '10px' }}
-									variant="contained"
-								>
-									Add To Cart
-								</Button>
-							</Link>
+							<Button
+								className="button add-btn"
+								sx={{ margin: '10px' }}
+								variant="contained"
+								href="/cart"
+								onClick={() => addItemHandler(data?.id)}
+							>
+								Add To Cart
+							</Button>
+
 							<Button
 								className="button buy-btn"
 								sx={{ margin: '10px' }}
 								variant="contained"
+								href="/address"
 							>
 								Buy Now
 							</Button>
