@@ -1,6 +1,7 @@
 import { SessionContext } from '../../context/context';
 import { useEffect, useState } from 'react';
 import Header from '../Header';
+import Footer from '../Footer';
 const Layout = ({ children }) => {
 	const [state, setState] = useState({
 		username: '',
@@ -36,6 +37,7 @@ const Layout = ({ children }) => {
 				>
 					{children}
 				</div>
+				<Footer />
 			</SessionContext.Provider>
 		</div>
 	);
