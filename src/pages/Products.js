@@ -35,6 +35,9 @@ const Products = () => {
 		setState((ref) => ({ ...ref, products: data }));
 	};
 	useEffect(() => {
+		console.log(state.products);
+	}, [state.products]);
+	useEffect(() => {
 		fetch(`${baseUrl}api/v1/products/categories`, {
 			method: 'GET',
 			headers: { 'Content-Type': 'application/json' },
@@ -52,19 +55,6 @@ const Products = () => {
 		getApi();
 	}, []);
 
-	const handleSearch = () => {
-		fetch(`${baseUrl}api/v1/products`, {
-			method: 'GET',
-			headers: { 'Content-Type': 'application/json' },
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				console.log(data);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	};
 	const handleFilterChange = (event) => {
 		const { name, value } = event.target;
 		setFilter((ref) => ({ ...ref, [name]: value }));
@@ -115,40 +105,14 @@ const Products = () => {
 			<div className="content-container">
 				<div className="sub-header-container">
 					<div className="search-container">
-						<div className="search-bar">
-							<div>
-								<input
-									type="text"
-									placeholder="Search"
-									className="search-input"
-								/>
-								<IconContext.Provider
-									value={{
-										size: '1.2em',
-										className:
-											'global class name search-icon',
-									}}
-								>
-									<BiSearchAlt />
-								</IconContext.Provider>
-							</div>
-							<div className="btn-container">
-								<Button
-									variant="contained"
-									onClick={handleSearch}
-									className="button"
-								>
-									Search
-								</Button>
-							</div>
-						</div>
-
 						<ButtonGroup
 							variant="outlined"
 							aria-label="outlined button group"
 							className="btn-group"
 						>
-							<Button className="tab-btn">Default</Button>
+							<Button className="tab-btn" onClick={handleSort}>
+								Default
+							</Button>
 							<Button
 								className="tab-btn"
 								onClick={() =>
@@ -174,7 +138,6 @@ const Products = () => {
 							>
 								Price Low to High
 							</Button>
-							<Button className="tab-btn">New</Button>
 						</ButtonGroup>
 					</div>
 				</div>
@@ -182,8 +145,13 @@ const Products = () => {
 					<div className="filter-section">
 						<h3>Filter By</h3>
 						<Box>
-							<FormControl>
+							<FormControl sx={{ marginTop: '10px' }}>
 								<TextField
+									sx={{
+										width: '250px',
+										marginLeft: '16px',
+										marginBottom: '10px',
+									}}
 									name="name"
 									value={filter.name}
 									placeholder="Search"
@@ -221,15 +189,27 @@ const Products = () => {
 								</Select>
 							</FormControl>
 							<FormControl>
-								<Button onClick={handleFilter}>Apply</Button>
+								<div className="btn">
+									<Button
+										sx={{
+											width: '250px',
+											marginLeft: '16px',
+										}}
+										className="button"
+										variant="contained"
+										onClick={handleFilter}
+									>
+										Apply
+									</Button>
+								</div>
 							</FormControl>
 						</Box>
 					</div>
 					<div className="content-section">
 						{state.products?.map((elem, elemId) => {
 							return (
-								<Link to={`/products/${elem._id}`}>
-									<ProductCard key={elemId} element={elem} />
+								<Link to={`/products/${elem._id}`} key={elemId}>
+									<ProductCard element={elem} />
 								</Link>
 							);
 						})}
