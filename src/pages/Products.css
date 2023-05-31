@@ -5,7 +5,7 @@
 	display: flex;
 }
 .filter-section {
-	max-width: 350px;
+	max-width: 250px;
 	width: 100%;
 }
 .sub-header-container {
@@ -18,42 +18,13 @@ a {
 	text-decoration: none;
 }
 
-.search-container {
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	width: 40%;
-	align-items: end;
-	margin-right: 30px;
+.btn {
+	width: 280px;
+	margin-left: -9px;
 }
-
-.search-bar {
-	display: flex;
-	align-items: center;
+.btn Button {
+	width: 100%;
 }
-.search-icon {
-	position: relative;
-	right: -803%;
-	transform: translateY(-50%);
-	margin-right: 6px;
-	top: 20px;
-	color: #999;
-}
-
-.search-input {
-	box-shadow: 3px 2px 8px #888888;
-	border: none;
-	width: 35%;
-	position: absolute;
-	height: 20px;
-	border-radius: 10px;
-	padding: 8px;
-	border: 1px solid #ccc;
-
-	flex-grow: 1;
-	/* padding-right: 30px; Adjust this value to make room for the icon */
-}
-
 .search-bar .btn-container {
 	margin-left: 220px;
 }
