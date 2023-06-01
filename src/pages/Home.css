@@ -10,14 +10,15 @@
 	margin-right: 30px;
 }
 .display-products a {
-	border: 1px solid #1a759f;
+	border: 1px solid #074264;
 	padding: 2px 8px;
-	color: black;
+	color: #074264;
+	font-weight: 700;
 }
 .card-container {
 	margin: 30px auto;
 	width: 90%;
-	height: 500px;
+	height: 650px;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
@@ -28,7 +29,7 @@
 @media (max-width: 800px) {
 	.card-container {
 		width: 90%;
-		height: 2030px;
+		height: 1927px;
 		display: flex;
 		flex-wrap: wrap;
 	}

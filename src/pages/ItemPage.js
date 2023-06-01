@@ -1,37 +1,52 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import './itempage.css';
 import { Button } from '@mui/material';
 import { IconContext } from 'react-icons';
 import { BsArrowLeftCircle, BsHeart } from 'react-icons/bs';
-import { BiRupee } from 'react-icons/bi';
-// "id": 1,
-// "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
-// "price": 109.95,
-// "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
-// "category": "men's clothing",
-// "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-// "rating": {
-// "rate": 3.9,
-// "count": 120
-// }
+import { BackendContext } from '../context/context';
 
 const ItemPage = ({ element }) => {
 	const { id } = useParams();
 	const [isLoading, setIsLoading] = useState(true);
 	const [data, setData] = useState({});
+	const { baseUrl } = useContext(BackendContext);
+	// console.log('element: ', element);
 	useEffect(() => {
-		fetch(`https://fakestoreapi.com/products/${id}`, {})
+		fetch(`${baseUrl}api/v1/products/${id}`, {})
 			.then((res) => res.json())
 			.then((response) => {
 				console.log(response);
 				setData(response);
 				setIsLoading(false);
-				console.log(`https://fakestoreapi.com/products/${id}`);
 			})
 			.catch((error) => console.log(error));
 	}, []);
+	useEffect(() => {
+		console.log('data', data);
+	}, [data]);
 
+	const addItemHandler = () => {
+		const cart = JSON.parse(sessionStorage.getItem('cart')) || [];
+		const isProductExist = cart.find((item) => item.id === id);
+		if (isProductExist) {
+			const updatedCart = cart.map((item) => {
+				if (item.id === id) {
+					return {
+						...item,
+						quantity: item.quantity + 1,
+					};
+				}
+				return item;
+			});
+			sessionStorage.setItem('cart', JSON.stringify(updatedCart));
+		} else {
+			sessionStorage.setItem(
+				'cart',
+				JSON.stringify([...cart, { ...data, quantity: 1 }]),
+			);
+		}
+	};
 	return (
 		<>
 			<div className="back">
@@ -44,10 +59,10 @@ const ItemPage = ({ element }) => {
 					<div className="image-container">
 						<img
 							className="aspect-square"
-							src={data.image}
+							src={data.imageURL}
 							alt={'Unsupported image.'}
-							height="500"
-							width="500"
+							// height="500"
+							// width="500"
 						/>
 						<IconContext.Provider
 							value={{
@@ -61,7 +76,7 @@ const ItemPage = ({ element }) => {
 					</div>
 					<div className=" details-cont">
 						<div className="heading-cont">
-							<h1 className="title">{data.title}</h1>
+							<h1 className="title">{data.name}</h1>
 							<h1 className="desc">{data.description}</h1>
 						</div>
 						<div className="specifications-cont">
@@ -73,32 +88,32 @@ const ItemPage = ({ element }) => {
 								</div>
 
 								<div className="rating-cont">
-									<p>Rating</p>
+									<p>Manufacturer</p>
 									<hr />
-									<h5>
-										{/* {data.rating.rate} of {data.rating.count} */}
-									</h5>
+									<h5>{data.manufacturer}</h5>
 								</div>
 							</div>
 						</div>
 						<div className="price-cont">
-							<h2>Price - $ {data.price}</h2>
+							<h3>Price - Rs. {data.price}</h3>
 						</div>
 						<br />
 						<div className=" button-cont btn">
-							<Link to="/cart">
-								<Button
-									className="button add-btn"
-									sx={{ margin: '10px' }}
-									variant="contained"
-								>
-									Add To Cart
-								</Button>
-							</Link>
 							<Button
-								className="button buy-btn"
-								sx={{ margin: '10px' }}
+								sx={{ margin: '10px', bgcolor: 'green' }}
+								className=" add-btn "
 								variant="contained"
+								href="/cart"
+								onClick={addItemHandler}
+							>
+								Add To Cart
+							</Button>
+
+							<Button
+								sx={{ margin: '10px', bgcolor: '#012a4a' }}
+								className=" buy-btn"
+								variant="contained"
+								href="/address"
 							>
 								Buy Now
 							</Button>

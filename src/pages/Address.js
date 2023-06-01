@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 import { validateSignup } from '../utils/helper';
 import { BackendContext } from '../context/context';
 import { Button, TextField } from '@mui/material';
+import { BsArrowLeft } from 'react-icons/bs';
 
-const SignupForm = () => {
+const Address = () => {
 	const { baseUrl } = useContext(BackendContext);
 	console.log(baseUrl);
 
@@ -21,9 +22,6 @@ const SignupForm = () => {
 		const { name, value } = event.target;
 		console.log(`name = ${name}`);
 		console.log(`value = ${value}`);
-		// console.log(`using dot notation = ${user.name}`);
-		// console.log(`using [] notation = ${user[name]}`);
-		// console.log(`using [] notation = ${user['name']}`);
 
 		setUser((ref) => ({ ...ref, [name]: value }));
 	};
@@ -60,17 +58,21 @@ const SignupForm = () => {
 			firstName: '',
 			lastName: '',
 			email: '',
-			password: '',
+			address: '',
 			contactNumber: '',
 		});
 	};
 
 	return (
 		<Fragment>
+			<p>
+				<Link to="/products">
+					<BsArrowLeft />
+					Go Back{' '}
+				</Link>
+			</p>
 			<div className="form-container">
-				{/* <div className="title"> */}
-				<h2>Sign Up</h2>
-				{/* </div> */}
+				<h2>Get your Item Delivered!</h2>
 
 				<form onSubmit={handleSubmit}>
 					<div className="name-field-container">
@@ -106,15 +108,7 @@ const SignupForm = () => {
 								onChange={handleChange}
 								className="text-field"
 							/>
-							<TextField
-								type="password"
-								placeholder="Password"
-								id="password"
-								name="password"
-								value={user.password}
-								onChange={handleChange}
-								className="text-field"
-							/>
+
 							<TextField
 								type="text"
 								placeholder="Contact"
@@ -124,6 +118,17 @@ const SignupForm = () => {
 								onChange={handleChange}
 								className="text-field"
 							/>
+							<textarea
+								type="text"
+								placeholder="Address"
+								id="address"
+								name="address"
+								value={user.address}
+								onChange={handleChange}
+								// className="text-field"
+								cols={30}
+								rows={5}
+							/>
 						</div>
 					</div>
 					<div className="btn">
@@ -131,16 +136,14 @@ const SignupForm = () => {
 							className="button"
 							variant="contained"
 							type="submit"
+							sx={{ width: '100%' }}
 						>
-							Sign up
+							Checkout
 						</Button>
 					</div>
-					<p>
-						Already have an account? <Link to="/login">Login </Link>
-					</p>
 				</form>
 			</div>
 		</Fragment>
 	);
 };
-export default SignupForm;
+export default Address;

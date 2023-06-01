@@ -23,6 +23,13 @@
 	width: 87%;
 	padding: 5px;
 }
+.data-field textarea {
+	resize: none;
+	width: 82%;
+
+	padding: 15px;
+	font-size: 17px;
+}
 .btn {
 	width: 99%;
 	margin: auto;
@@ -34,7 +41,13 @@
 	background-color: #1a759f;
 	color: white;
 }
-
+.form-container .btn {
+	width: 535px;
+	margin: 20px 41px;
+}
+.form-container .button {
+	width: 100%;
+}
 p {
 	text-align: center;
 	padding-top: 20px;
@@ -51,7 +64,7 @@ p a {
 }
 
 /* @media Query */
-@media (max-width: 800px) {
+@media (max-width: 460px) {
 	.form-container {
 		width: 75vw;
 	}
@@ -60,5 +73,19 @@ p a {
 		flex-direction: column;
 		width: 93%;
 		padding: 5px;
+	}
+	.data-field textarea {
+		resize: none;
+		width: 80%;
+
+		padding: 15px;
+		font-size: 17px;
+	}
+	.form-container .btn {
+		width: 253px;
+		margin: 23px;
+	}
+	.form-container .button {
+		width: 100%;
 	}
 }

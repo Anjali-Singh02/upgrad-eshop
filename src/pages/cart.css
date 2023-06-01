@@ -94,7 +94,7 @@
 }
 .main-cart-section .cart-items {
 	width: 100%;
-	/* height: 30rem; */
+	height: 30rem;
 	background: linear-gradient(
 		103.49deg,
 		#ffffff -28.13%,
@@ -104,35 +104,35 @@
 	border-radius: 2rem;
 	margin: 2px auto 50px auto;
 	display: grid;
-	/* place-items: center; */
 }
 
 .cart-items hr {
-	margin: 1.4rem 3rem;
-	overflow-y: scroll;
+	margin: 1.4rem;
 }
 
 .cart-items-container {
 	width: 90%;
+	height: 26rem;
+	margin: auto;
 }
 
 .items-info {
 	width: 100%;
-	height: 10rem;
-	/* background-color: lavender; */
+	height: 8rem;
+	background-color: rgba(244, 240, 232, 0.877);
 	margin: auto;
 	display: grid;
-	padding-left: 90px;
 	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	align-content: space-around;
 }
 
 .items-info .product-img img {
-	width: 9rem;
-	height: 8rem;
+	width: 8rem;
+	height: 6rem;
 	filter: drop-shadow(0rem 0.4rem 1rem #f1f7ff);
 	border-radius: 1rem;
 	margin-top: 20px;
-	margin: 30px auto;
+	margin: 15px;
 }
 
 .items-info .title {
@@ -164,7 +164,7 @@
 }
 .add-quantity {
 	display: flex;
-	justify-content: flex-end;
+	justify-content: center;
 	align-items: center;
 }
 
@@ -198,7 +198,7 @@
 
 .price {
 	display: flex;
-	justify-content: flex-end;
+	justify-content: center;
 	align-items: center;
 }
 
@@ -212,9 +212,8 @@
 
 .remove-item {
 	display: flex;
-	justify-content: flex-end;
+	justify-content: end;
 	align-items: center;
-	margin-right: 5rem;
 }
 
 .remove-item Button {
@@ -222,119 +221,89 @@
 	background-color: transparent;
 }
 
-.card-total {
-	width: 95%;
-	margin-top: 4rem;
-	text-align: right;
-}
-
-.card-total h3 {
-	font-style: 200;
-	font-size: 2.58rem;
-	line-height: 3.2rem;
-	text-transform: capitalize;
-	color: #606166;
-}
-
-.card-total h3 span {
-	font-style: normal;
-	font-weight: bold;
-	font-size: 2.8rem;
-	line-height: 3.2rem;
-	text-transform: capitalize;
-	color: #000000;
-	margin-left: 1rem;
-}
-
-.card-total button {
-	border: none;
-	font-size: 1.6rem;
-	padding: 1rem 3rem;
-	color: #fff;
-	background-color: #349bf3;
-	text-transform: uppercase;
-	margin-top: 1rem;
-	border-radius: 0.5rem;
-	cursor: pointer;
-	letter-spacing: 1px;
-}
-
 /* hover effects  */
-.fa-trash-alt {
-	color: #ed4848;
-}
 
-.card-total Button:hover {
-	background-color: #0077dc;
+.total-container {
+	display: flex;
+	justify-content: space-between;
 }
-
-.card-total .clear-cart {
-	margin-left: 3rem;
-	background-color: rgb(209, 61, 61);
+.total-container Button {
+	padding: 0px 10px;
 }
-
-.card-total .clear-cart:hover {
-	background-color: rgb(197, 5, 5);
+.total-container Button:hover {
+	background: rgb(4, 75, 116);
+}
+.total-amount {
+	width: 18%;
+	/* margin-left: 74%; */
+	background-color: rgb(7, 73, 112);
+	color: white;
+	text-align: center;
+	border-radius: 5px;
+}
+.total-amount {
+	padding: 5px 30px;
+	display: flex;
+	align-items: center;
+}
+.total-amount p {
+	padding: 0px 0 0 10px;
+	font-size: 20px;
+	font-weight: 600;
 }
 
 /* responsive media queries  */
 
-@media (max-width: 968px) {
-	html {
-		font-size: 50%;
+@media (max-width: 460px) {
+	.icon-cart {
+		margin: auto 2px;
 	}
-}
-
-@media (max-width: 768px) {
-	.continue-shopping h3 {
-		margin-left: 0;
-		font-size: 1.85rem;
+	.icon-cart p {
+		margin: 10px -42px;
 	}
-
 	.items-info {
-		width: 100%;
-		height: auto;
 		display: grid;
-		grid-template-columns: 1fr;
+		grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+		width: 150%;
 	}
 
-	.title,
-	.add-quantity,
-	.price,
-	.remove-item {
-		padding-left: 2rem;
+	.items-info .product-img img {
+		margin-left: 5px;
+		width: 80px;
+		height: 80px;
 	}
-
-	.items-info .product-img {
-		width: 100%;
-		text-align: center;
-		margin-bottom: 2rem;
+	.items-info .title h2 {
+		font-size: 12px;
 	}
-
+	.items-info .title p {
+		font-size: 8px;
+	}
 	.add-quantity {
-		margin: 2rem 0 2rem 0;
-		justify-content: flex-start;
+		text-align: start;
+		align-items: center;
+		width: 120px;
 	}
-
-	.price {
-		justify-content: flex-start;
-		margin-bottom: 2rem;
+	.add-quantity Button {
+		font-size: small;
+		margin: -18px;
 	}
-
-	.price h3::before {
-		content: 'Price: ';
+	.add-quantity input {
+		width: 30px;
+		height: 20px;
+		font-size: 15px;
 	}
-
-	.remove-item {
-		justify-content: flex-start;
+	.remove-item Button {
+		font-size: small;
 	}
-
-	.card-total {
-		margin-bottom: 2rem;
-		text-align: center;
+	.price h3 {
+		font-size: 13px;
 	}
-
-	.card-total button {
-		margin-bottom: 3rem;
+	.total-container {
+		display: flex;
+		flex-direction: column;
+	}
+	.total-amount {
+		width: 73%;
+		margin: auto;
 	}
 }
