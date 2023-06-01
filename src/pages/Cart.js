@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './cart.css';
 import { BsArrowLeft } from 'react-icons/bs';
 import { FaShoppingCart, FaTrash } from 'react-icons/fa';
@@ -9,14 +9,46 @@ import { Button } from '@mui/material';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 
 const Cart = () => {
-	// const [count, setCount] = useState(1);
-	const cart = JSON.parse(localStorage.getItem('cart')) || [];
-	if (!cart.length) <div>Cart is Empty</div>;
+	// const [amount, setAmount] = useState(0);
 
-	const handleDecre = (id) => {};
-	const handleIncre = (id) => {};
+	const [cart, setCart] = useState(
+		JSON.parse(sessionStorage.getItem('cart')) || [],
+	);
+	const handleDecre = (id) => {
+		const updatedCart = cart.map((item) => {
+			if (item._id === id && item.quantity > 1) {
+				item.quantity -= 1;
+			}
+			return item;
+		});
+		setCart(updatedCart);
+		sessionStorage.setItem('cart', JSON.stringify(updatedCart));
+	};
+	// const handleTotal = () => {
+	// 	let total = 0;
+	// 	cart.map((item) => (total = item.price + item.price));
+	// 	setAmount(total);
+	// };
+	// useEffect(() => {
+	// 	handleTotal();
+	// }, [cart]);
+	const handleIncre = (id) => {
+		const updatedCart = cart.map((item) => {
+			if (item._id === id) {
+				item.quantity += 1;
+			}
+			return item;
+		});
+		setCart(updatedCart);
+		sessionStorage.setItem('cart', JSON.stringify(updatedCart));
+	};
 
-	const handleDelete = () => {};
+	const handleDelete = (id) => {
+		const updatedCart = cart.filter((item) => item._id !== id);
+		setCart(updatedCart);
+		sessionStorage.setItem('cart', JSON.stringify(updatedCart));
+	};
+
 	return (
 		<>
 			<header className="sub-header-cont">
@@ -43,72 +75,126 @@ const Cart = () => {
 			</header>
 
 			<section className="main-cart-section">
-				<h1 className="cart-heading">shopping Cart</h1>
+				<h1 className="cart-heading">Shopping Cart</h1>
 				<p className="total-items">
-					you have{' '}
-					<span className="total-items-count">{cart.length} </span>{' '}
-					items in shopping cart
+					You have{' '}
+					<span className="total-items-count">{cart.length}</span>{' '}
+					items in the shopping cart
 				</p>
-				<div className="cart-items">
-					<div className="cart-items-container">
-						<Scrollbars>
-							{cart.map((elem) => {
-								const { name, imageURL, category, price } =
-									elem;
 
-								return (
-									<div className="items-info">
-										<div className="product-img">
-											<img src={imageURL} alt="image" />
-										</div>
+				{cart.length === 0 ? (
+					<div>Cart is Empty</div>
+				) : (
+					<div className="cart-items">
+						<div className="cart-items-container">
+							<Scrollbars>
+								{cart.map((elem) => {
+									const {
+										_id: id,
+										name,
+										imageURL,
+										category,
+										price,
+										quantity,
+									} = elem;
 
-										<div className="title">
-											<h2>{name}</h2>
-											<p>{category}</p>
-										</div>
-										<div className="add-quantity">
-											<Button
-												className="minus-btn"
-												onClick={() =>
-													handleDecre(cart?.id)
-												}
-											>
-												<AiOutlineMinus />
-											</Button>
-											<input
-												type="text"
-												className="textField"
-												value={cart.quantity}
-											/>
-											<Button
-												className="plus-btn"
-												onClick={() => {
-													handleIncre(cart?.id);
-												}}
-											>
-												<AiOutlinePlus />
-											</Button>
-										</div>
-										<div className="price">
-											<h3>Rs {price}</h3>
-										</div>
-										<div className="remove-item">
-											<Button onClick={handleDelete}>
-												<IconContext.Provider
-													value={{
-														color: 'red',
-														size: '1.3em',
-													}}
+									return (
+										<div className="items-info" key={name}>
+											<div className="product-img">
+												<img
+													src={imageURL}
+													alt="productImg"
+												/>
+											</div>
+
+											<div className="title">
+												<h2>{name}</h2>
+												<p>{category}</p>
+											</div>
+
+											<div className="add-quantity">
+												<Button
+													className="minus-btn"
+													disabled={quantity === 1}
+													onClick={() =>
+														handleDecre(id)
+													}
 												>
-													<FaTrash />
-												</IconContext.Provider>
-											</Button>
+													<AiOutlineMinus />
+												</Button>
+												<input
+													type="text"
+													className="textField"
+													value={quantity}
+													readOnly
+												/>
+												<Button
+													className="plus-btn"
+													onClick={() =>
+														handleIncre(id)
+													}
+												>
+													<AiOutlinePlus />
+												</Button>
+											</div>
+
+											<div className="price">
+												<h3>
+													Rs{' '}
+													{(price * quantity).toFixed(
+														2,
+													)}
+												</h3>
+											</div>
+
+											<div className="remove-item">
+												<Button
+													onClick={() =>
+														handleDelete(id)
+													}
+												>
+													<IconContext.Provider
+														value={{
+															color: 'red',
+															size: '1.3em',
+														}}
+													>
+														<FaTrash />
+													</IconContext.Provider>
+												</Button>
+											</div>
 										</div>
-									</div>
-								);
-							})}
-							<hr />
-						</Scrollbars>
+									);
+								})}
+							</Scrollbars>
+						</div>
+					</div>
+				)}
+				<div className="total-container">
+					<Button
+						variant="contained"
+						sx={{
+							bgcolor: '#012a4a',
+							padding: '10px',
+							margin: '10px 20px',
+							fontWeight: 'bold',
+						}}
+						href="/address"
+					>
+						Buy Now
+					</Button>
+					<div className="total-amount">
+						<h3>Total amount : </h3>
+						<p>
+							Rs.
+							{cart
+								.reduce(
+									(total, item) =>
+										total + item.price * item.quantity,
+									0,
+								)
+								.toFixed(2)}
+						</p>
 					</div>
 				</div>
 			</section>
