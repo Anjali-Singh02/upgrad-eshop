@@ -61,13 +61,10 @@ const Products = () => {
 	};
 	const handleFilter = () => {
 		const { category, name, sortBy, direction } = filter;
-		fetch(
-			`${baseUrl}api/v1/products?category=${category}&name=${name}&sortBy=${sortBy}&direction=${direction}`,
-			{
-				method: 'GET',
-				headers: { 'Content-Type': 'application/json' },
-			},
-		)
+		fetch(`${baseUrl}api/v1/products?category=${category}&name=${name}`, {
+			method: 'GET',
+			headers: { 'Content-Type': 'application/json' },
+		})
 			.then((response) => response.json())
 			.then((data) => {
 				console.log(data);
@@ -110,7 +107,10 @@ const Products = () => {
 							aria-label="outlined button group"
 							className="btn-group"
 						>
-							<Button className="tab-btn" onClick={handleSort}>
+							<Button
+								className="tab-btn"
+								onClick={() => handleSort('_id', 'desc')}
+							>
 								Default
 							</Button>
 							<Button
@@ -144,7 +144,7 @@ const Products = () => {
 				<div className="body-container">
 					<div className="filter-section">
 						<h3>Filter By</h3>
-						<Box>
+						<Box sx={{ margin: 'auto' }}>
 							<FormControl sx={{ marginTop: '10px' }}>
 								<TextField
 									sx={{
@@ -192,7 +192,7 @@ const Products = () => {
 								<div className="btn">
 									<Button
 										sx={{
-											width: '250px',
+											width: 'fit-content',
 											marginLeft: '16px',
 										}}
 										className="button"
@@ -200,6 +200,24 @@ const Products = () => {
 										onClick={handleFilter}
 									>
 										Apply
+									</Button>
+
+									<Button
+										sx={{
+											width: 'fit-content',
+
+											marginLeft: '16px',
+										}}
+										className="button"
+										variant="contained"
+										onClick={() =>
+											setFilter({
+												name: '',
+												category: '',
+											})
+										}
+									>
+										Clear
 									</Button>
 								</div>
 							</FormControl>

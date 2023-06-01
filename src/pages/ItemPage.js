@@ -22,14 +22,16 @@ const ItemPage = ({ element }) => {
 			})
 			.catch((error) => console.log(error));
 	}, []);
+	useEffect(() => {
+		console.log('data', data);
+	}, [data]);
 
-	const addItemHandler = (data) => {
-		console.log('Data: ', data);
-		const cart = JSON.parse(localStorage.getItem('cart')) || [];
-		const isProductExist = cart.find((item) => item.id === data.id);
+	const addItemHandler = () => {
+		const cart = JSON.parse(sessionStorage.getItem('cart')) || [];
+		const isProductExist = cart.find((item) => item.id === id);
 		if (isProductExist) {
 			const updatedCart = cart.map((item) => {
-				if (item.id === data.id) {
+				if (item.id === id) {
 					return {
 						...item,
 						quantity: item.quantity + 1,
@@ -37,9 +39,9 @@ const ItemPage = ({ element }) => {
 				}
 				return item;
 			});
-			localStorage.setItem('cart', JSON.stringify(updatedCart));
+			sessionStorage.setItem('cart', JSON.stringify(updatedCart));
 		} else {
-			localStorage.setItem(
+			sessionStorage.setItem(
 				'cart',
 				JSON.stringify([...cart, { ...data, quantity: 1 }]),
 			);
@@ -93,23 +95,23 @@ const ItemPage = ({ element }) => {
 							</div>
 						</div>
 						<div className="price-cont">
-							<h2>Price - $ {data.price}</h2>
+							<h3>Price - Rs. {data.price}</h3>
 						</div>
 						<br />
 						<div className=" button-cont btn">
 							<Button
-								className="button add-btn"
-								sx={{ margin: '10px' }}
+								sx={{ margin: '10px', bgcolor: 'green' }}
+								className=" add-btn "
 								variant="contained"
 								href="/cart"
-								onClick={() => addItemHandler(data?.id)}
+								onClick={addItemHandler}
 							>
 								Add To Cart
 							</Button>
 
 							<Button
-								className="button buy-btn"
-								sx={{ margin: '10px' }}
+								sx={{ margin: '10px', bgcolor: '#012a4a' }}
+								className=" buy-btn"
 								variant="contained"
 								href="/address"
 							>

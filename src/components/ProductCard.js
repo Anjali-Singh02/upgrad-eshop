@@ -1,4 +1,5 @@
 import {
+	Button,
 	Card,
 	CardActionArea,
 	CardContent,
@@ -6,25 +7,41 @@ import {
 	Typography,
 } from '@mui/material';
 import React from 'react';
+import '../pages/itempage.css';
 
 const ProductCard = ({ element }) => {
 	return (
 		<Card
 			sx={{
-				width: '300px',
+				width: '250px',
 				margin: '10px',
+				height: '300px',
 			}}
 		>
 			<CardActionArea>
-				<CardMedia
+				<img
 					component="img"
-					height="400"
-					image={element.imageURL}
+					width="170"
+					height="160"
+					src={element.imageURL}
 					alt="bag"
 				/>
 				<CardContent>
-					<Typography gutterBottom variant="h6" component="div">
+					<Typography
+						gutterBottom
+						variant="p"
+						component="div"
+						sx={{ fontSize: '20px', marginTop: '20px' }}
+					>
 						{element.name}
+					</Typography>
+					<Typography
+						gutterBottom
+						variant="p"
+						sx={{ fontSize: '15px' }}
+						component="div"
+					>
+						Rs. {element.price}
 					</Typography>
 				</CardContent>
 			</CardActionArea>

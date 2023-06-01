@@ -19,6 +19,7 @@ a {
 }
 
 .btn {
+	display: flex;
 	width: 280px;
 	margin-left: -9px;
 }
@@ -76,10 +77,17 @@ a {
 		width: 100%;
 		font-size: 5px;
 	}
+	.filter-section .btn {
+		width: 250px;
+		margin-bottom: 10px;
+	}
 	.body-container {
 		/* ?width: 100%; */
 		display: flex;
 		flex-direction: column;
+	}
+	.filter-section {
+		margin: auto;
 	}
 	.content-section {
 		margin: auto;

@@ -17,7 +17,7 @@ import {
 	Typography,
 	ListItemIcon,
 } from '@mui/material';
-import { RiShoppingBag3Fill } from 'react-icons/ri';
+// import { RiShoppingBag3Fill } from 'react-icons/ri';
 import { IconContext } from 'react-icons';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -250,15 +250,16 @@ const Header = ({ showBookShowButton }) => {
 						}}
 					>
 						<Link to={'/'}>
-							<RiShoppingBag3Fill />
+							<ShoppingCartIcon />
 							uG-Eshop
 						</Link>
 					</IconContext.Provider>
 				</div>
+
 				{!state.loggedIn ? (
 					<div className="button-section">
 						<Button
-							color="primary"
+							sx={{ color: '#074264', bgcolor: 'white' }}
 							variant="contained"
 							onClick={toggleModal}
 						>
@@ -267,6 +268,10 @@ const Header = ({ showBookShowButton }) => {
 					</div>
 				) : (
 					<div className="button-section">
+						<h3 className="homeLink">
+							<Link to={'/'}>Home</Link>
+						</h3>
+
 						<Box sx={{ marginLeft: '15px' }}>
 							<Link to={'/cart'}>
 								<ShoppingCartOutlinedIcon
@@ -278,16 +283,14 @@ const Header = ({ showBookShowButton }) => {
 							<IconButton
 								onClick={handleClick}
 								size="large"
-								sx={{ ml: 2, fontSize: '35px' }}
+								sx={{ ml: 2, fontSize: '35px', color: 'white' }}
 								aria-controls={
 									open ? 'account-menu' : undefined
 								}
 								aria-haspopup="true"
 								aria-expanded={open ? 'true' : undefined}
 							>
-								{/* <Avatar sx={{ width: 32, height: 32 }}> */}
 								<MdAccountCircle />
-								{/* </Avatar> */}
 							</IconButton>
 						</Tooltip>
 						<Box sx={{}}>
@@ -412,7 +415,7 @@ const Header = ({ showBookShowButton }) => {
 					centered
 				>
 					<Tab label="Login" />
-					<Tab label="Register" />
+					<Tab label="Sign Up" />
 				</Tabs>
 
 				{/* login tab  */}
@@ -443,7 +446,7 @@ const Header = ({ showBookShowButton }) => {
 							label="Password"
 							id="password"
 							name={'password'}
-							type="text"
+							type="password"
 							sx={{ width: '100%' }}
 							password={login.password}
 							onChange={handleLoginChange}

@@ -1,5 +1,5 @@
 import React, { Fragment, useContext, useEffect, useState } from 'react';
-import '../components/form.css';
+import './form.css';
 import { Link } from 'react-router-dom';
 import { validateSignup } from '../utils/helper';
 import { BackendContext } from '../context/context';
@@ -22,9 +22,6 @@ const Address = () => {
 		const { name, value } = event.target;
 		console.log(`name = ${name}`);
 		console.log(`value = ${value}`);
-		// console.log(`using dot notation = ${user.name}`);
-		// console.log(`using [] notation = ${user[name]}`);
-		// console.log(`using [] notation = ${user['name']}`);
 
 		setUser((ref) => ({ ...ref, [name]: value }));
 	};
@@ -68,10 +65,14 @@ const Address = () => {
 
 	return (
 		<Fragment>
+			<p>
+				<Link to="/products">
+					<BsArrowLeft />
+					Go Back{' '}
+				</Link>
+			</p>
 			<div className="form-container">
-				{/* <div className="title"> */}
-				<h2>Get you Item Delivered!</h2>
-				{/* </div> */}
+				<h2>Get your Item Delivered!</h2>
 
 				<form onSubmit={handleSubmit}>
 					<div className="name-field-container">
@@ -140,12 +141,6 @@ const Address = () => {
 							Checkout
 						</Button>
 					</div>
-					<p>
-						<Link to="/products/:id">
-							<BsArrowLeft />
-							Go Back{' '}
-						</Link>
-					</p>
 				</form>
 			</div>
 		</Fragment>

@@ -1,7 +1,7 @@
 .app-header {
-	background-color: #9797e1;
-	height: 36px;
-	padding: 8px 32px 8px 16px;
+	background-color: #074264;
+	height: 46px;
+	padding: 10px 32px 8px 16px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -15,11 +15,19 @@
 .login-button {
 	float: right;
 }
-
-.app-logo {
-	animation: app-logo-spin infinite 8s linear;
-	height: 35px;
-	background: #ff7f7f;
+.logo {
+	margin-bottom: 30px;
+}
+.logo a {
+	display: flex;
+	align-items: center;
+	color: white;
+	flex-direction: column;
+	padding-top: 25px;
+}
+.homeLink a {
+	color: white;
+	text-align: start;
 }
 
 .bookshow-button {

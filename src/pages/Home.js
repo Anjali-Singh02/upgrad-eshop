@@ -25,6 +25,9 @@ const Home = () => {
 	};
 
 	useEffect(() => {
+		console.log(item);
+	}, [item]);
+	useEffect(() => {
 		getApi();
 	}, []);
 
@@ -39,7 +42,7 @@ const Home = () => {
 			<div className="card-container">
 				{item.map((element, elemId) => {
 					return (
-						<Link to={`/products/${element.id}`}>
+						<Link to={`/products/${element._id}`}>
 							<ProductCard
 								className="card"
 								key={elemId}
